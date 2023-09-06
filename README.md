@@ -1,12 +1,18 @@
 # Fakebook
 A Facebook-like social media application written in Python
+# Objectives
+
+# Features 
+
 # Team Members
-Brian Nguyen
+Brian Nguyen(the-brain711): Developer
 
-Caleb Hickman-Thomas
+Caleb Hickman-Thomas(CaramelHeaven1): Developer
 
-Christian Johnson
+Christian Johnson(CJhonson1234): Developer 
 
-Connor White
+Connor White(TheConnorGW): Developer
 
-Manolo Diaz
+Manolo Diaz(manny23diaz): Developer
+# Project Language
+Python 
