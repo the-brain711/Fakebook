@@ -16,11 +16,21 @@ Our objective is to create a home-grown facebook-like application that will allo
     
     `git clone https://github.com/the-brain711/Fakebook.git`
 
-2. Install all dependencies for Fakebook
+2. Make a virtual environment to manage dependencies
    
    `cd Fakebook`
 
+   `py -3 -m venv .venv`
+
+   `.venv\Scripts\activate`
+
+3. Install all dependencies for Fakebook
+
    `pip install -e .` 
+
+4. Run Fakebook App (debug flag is optional)
+
+   `flask --app Fakebook_Project run --debug`
 
 # Description
 Fakebook is a facebook-like application with a focus on communication and interactivity. Our program will allow those wishing to interact 

@@ -1,11 +1,25 @@
-[project]
-name = "Fakebook"
-version = "0.1.0"
-description = "Facebook-like social media web application"
-dependencies = [
-    "flask",
-]
-
 [build-system]
 requires = ["flit_core<4"]
 build-backend = "flit_core.buildapi"
+
+[project]
+name = "Fakebook"
+version = "0.0.1"
+authors = [
+  { name="Brian Nguyen" },
+  { name="Caleb Hickman-Thomas" },
+  { name="Christian Johnson" },
+  { name="Connor White" },
+  { name="Manolo Diaz" },
+]
+description = "Facebook-like social media web application"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPL 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/the-brain711/Fakebook"
