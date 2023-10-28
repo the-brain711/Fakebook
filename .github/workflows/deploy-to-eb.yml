@@ -30,7 +30,7 @@ jobs:
         run: |
           aws elasticbeanstalk create-application-version \
           --application-name Fakebook \
-          --source-bundle S3Bucket="fakebook-deploy-src",S3Key="src/Fakebook/deploy_package.zip" \
+          --source-bundle S3Bucket="fakebook-deploy-src",S3Key="deploy_package.zip" \
           --version-label "ver-${{ github.sha }}" \
           --description "commit-sha-${{ github.sha }}"
 
