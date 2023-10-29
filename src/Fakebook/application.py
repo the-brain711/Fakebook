@@ -1,16 +1,10 @@
-from flask import Flask
-application = Flask(__name__) # This needs to be named `application`
+from Fakebook import create_app
 
 
-@application.route("/")
-def index():
-    return "<h1>Hello World!</h1>"
+##### INITIALIZE FLASK #####
+application = create_app() # This needs to be named `application`
 
 
-@application.route("/another")
-def another():
-    return "<h1>Another Page!</h1>"
-
-
+# Starts the flask application
 if __name__ == "__main__":
-    application.run(debug=True)
+    application.run()
