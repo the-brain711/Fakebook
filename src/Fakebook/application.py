@@ -4,7 +4,7 @@ application = Flask(__name__) # This needs to be named `application`
 
 @application.route("/")
 def index():
-    return "<h1>Hello World!</h1>"
+    return "<h1>Hello DEV!</h1>"
 
 
 @application.route("/another")
