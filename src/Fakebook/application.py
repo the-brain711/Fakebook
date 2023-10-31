@@ -6,7 +6,7 @@ import MySQLdb.cursors, re, hashlib
 ##### DEPENDENCIES #####
 
 ##### INITIALIZE FLASK #####
-application = Flask(__name__) # This needs to be named `application`
+application = Flask(__name__, template_folder="templates") # This needs to be named `application`
 # Change this to your secret key (it can be anything, it's for extra protection)
 application.secret_key = 'secret'
 ##### INITIALIZE FLASK #####

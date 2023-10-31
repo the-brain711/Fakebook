@@ -30,7 +30,7 @@ Our objective is to create a home-grown facebook-like application that will allo
 
 4. Run Fakebook App (debug flag is optional)
 
-   `flask --app Fakebook run --debug`
+   `flask --app src/Fakebook/application.py run --debug`
 
 # Description
 Fakebook is a facebook-like application with a focus on communication and interactivity. Our program will allow those wishing to interact 
