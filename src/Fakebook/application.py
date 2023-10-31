@@ -24,6 +24,9 @@ db = MySQL(application)
 ##### ROUTES #####
 @application.route('/', methods=['GET', 'POST'])
 def login():
+    if 'loggedin' in session:
+        return render_template('home.html', username=session['username'])
+    
     # Output message if something goes wrong...
     msg = ''
     
@@ -121,6 +124,20 @@ def home():
         return render_template('home.html', username=session['username'])
     
     return redirect(url_for('login'))
+
+@application.route('/profile')
+def profile():
+    # Check if user is logged in
+    if 'loggedin' in session:
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(
+            'SELECT * FROM users_tb WHERE id = %s',
+            (session['id'],)
+        )
+        user = cursor.fetchone()
+        
+        # Show profile page with user info
+        return render_template('profile.html', user=user)
 ##### ROUTES #####
 
 # Starts the flask application
