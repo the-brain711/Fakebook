@@ -162,11 +162,9 @@ nav h1 {
 
 .post-text {
     height: 20vh;
-    
 }
 
 .post-text::placeholder {
     text-align: left;
     vertical-align: top;
-    
 }
