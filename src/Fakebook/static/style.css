@@ -12,6 +12,31 @@ body {
     line-height: 1.5;
 }
 
+/* Navbar */
+nav {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+nav h1 {
+    color: maroon;
+    text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.nav-links {
+    display: flex;
+    column-gap: 1rem;
+    text-align: center;
+}
+
+.nav-links a {
+    text-decoration:none;
+}
+
 /* Login Page */
 .login {
     display: flex;
