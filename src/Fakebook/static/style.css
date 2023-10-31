@@ -1,0 +1,86 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    font-size: 1.125rem;
+    line-height: 1.5;
+}
+
+/* Login Page */
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 3rem;
+    height: 80vh;
+    margin-inline: auto;
+}
+
+.login-greeter {
+    text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.login-greeter h1 {
+    color: maroon;
+}
+
+.login-greeter label {
+    font-size: larger;
+}
+
+.login-container {
+    background-color: white;
+    margin-top: 3rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.login-container form div {
+    font-size: small;
+    color: red;
+}
+
+.login-button {
+    font-weight: bold;
+}
+
+.login-container a {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.25rem;
+    font-size: small;
+}
+
+.login-container button {
+    margin-top: 1.5rem;
+}
+
+
+/* Signup Page */
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
