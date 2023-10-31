@@ -111,6 +111,7 @@ def signup():
             )
             db.connection.commit()
             msg = 'You have successfully signed up to Fakebook.'
+            return redirect(url_for('login'))
     # If form is empty or missing 1 box
     elif request.method == 'POST':
         msg = 'Please fill out the form completely.'
