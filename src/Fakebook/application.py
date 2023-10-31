@@ -41,7 +41,8 @@ def login():
         password = hashed_password.hexdigest()
         
         # Check if user exists in database
-        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
+        #cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
             'SELECT * FROM users_tb WHERE username = %s AND password = %s',
             (username, password,)
@@ -82,7 +83,8 @@ def signup():
         email = request.form['email']
         
         # Check if user exists in database
-        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
+        #cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
             'SELECT * FROM users_tb WHERE username = %s',
             (username,)
@@ -109,7 +111,8 @@ def signup():
                 'INSERT INTO users_tb (username, password, email) VALUES(%s, %s, %s);',
                 (username, password, email,)
             )
-            db.connection.commit()
+            db.connect.commit()
+            #db.connection.commit()
             msg = 'You have successfully signed up to Fakebook.'
             return redirect(url_for('login'))
     # If form is empty or missing 1 box
@@ -130,7 +133,8 @@ def home():
 def profile():
     # Check if user is logged in
     if 'loggedin' in session:
-        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
+        #cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
             'SELECT * FROM users_tb WHERE id = %s',
             (session['id'],)

@@ -3,5 +3,41 @@
 {% block title %}Fakebook - Home{% endblock %}
 
 {% block content %}
+<div class="home-header">
+    <h3>{{ username }}</h3>
+    <button id="open-post-popup">Create Post</button>
 
+    <dialog class="post-popup" id="post-popup">
+        <div>
+            <h2></h2>
+            <h2>Create Post</h2>
+            <h2 id="close-post-popup">X</h2>
+        </div>
+
+        <form action="" autocomplete="off">
+            <textarea rows="5" name="post-textbox" id="post-textbox" placeholder="What's on your mind {{ username }}?"></textarea>
+            <input type="submit" value="Create Post">
+
+            <div class="login-msg">{{ msg }}</div>
+        </form>
+    </dialog>
+
+    <script>
+        const open_popup = document.getElementById('open-post-popup')
+        const close_popup = document.getElementById('close-post-popup')
+        const dialog = document.getElementById('post-popup')
+
+        open_popup.addEventListener("click", () => {
+            dialog.showModal();
+        })
+
+        close_popup.addEventListener("click", () => {
+            dialog.close();
+        })
+    </script>
+</div>
+
+<div>
+    <h1>Posts</h1>
+</div>
 {% endblock %}

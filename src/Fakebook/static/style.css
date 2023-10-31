@@ -17,7 +17,7 @@ nav {
     display: flex;
     overflow: hidden;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
@@ -34,7 +34,15 @@ nav h1 {
 }
 
 .nav-links a {
-    text-decoration:none;
+    text-decoration: none;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 2rem;
+    margin-top: 2rem;
 }
 
 /* Login Page */
@@ -108,4 +116,57 @@ nav h1 {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+}
+
+
+/* Home Page */
+.home-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 45vw;
+}
+
+.home-header button {
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color: maroon;
+    color: white;
+    font-weight: bold;
+    height: 3rem;
+}
+
+.home-header button:hover {
+    background-color: rgb(95, 3, 3);
+}
+
+.home-header dialog {
+    width: 50vh;
+}
+
+.home-header dialog::backdrop {
+    background-color: #f0f2f5d5;
+}
+
+.home-header dialog div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.home-header dialog form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.post-text {
+    height: 20vh;
+    
+}
+
+.post-text::placeholder {
+    text-align: left;
+    vertical-align: top;
+    
 }
