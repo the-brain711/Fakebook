@@ -15,11 +15,10 @@
         </div>
 
         <form action="{{ url_for('create_post') }}" method="post" autocomplete="off">
-            <textarea rows="5" name="post-textbox" id="post-textbox" placeholder="What's on your mind {{ username }}?"
-                maxlength="500" required></textarea>
-            <input type="file" name="post-media" id="post-media" accept="image/png, image/jpeg" />
+            <textarea rows="5" name="create-post-textbox" id="create-post-textbox"
+                placeholder="What's on your mind {{ username }}?" maxlength="500" required></textarea>
+            <input type="file" name="create-post-media" id="create-post-media" accept="image/png, image/jpeg" />
             <input type="submit" value="Create Post" />
-            <div class="login-msg">{{ msg }}</div>
         </form>
     </dialog>
 
@@ -39,6 +38,18 @@
 </div>
 
 <div class="timeline">
-    
+    {% if msg %}
+    <h3>{{ msg }}</h3>
+    {% else %}
+    {% for post in posts %}
+    <div class="post">
+        <div class="row1">
+            <h4>{{ post['username'] }}</h4>
+            <label>{{ post['creation_date'] }}</label>
+        </div>
+        <p>{{ post['description'] }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

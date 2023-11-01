@@ -32,7 +32,7 @@ db = MySQL(application)
 @application.route("/", methods=["GET", "POST"])
 def login():
     if "loggedin" in session:
-        return render_template("home.html", username=session["username"])
+        return redirect(url_for("home"))
 
     # Output message if something goes wrong...
     msg = ""
@@ -146,11 +146,25 @@ def signup():
 
 @application.route("/home")
 def home():
+    # Output message if something goes wrong
+    msg = ""
+    
     # Check if user is logged in
-    if "loggedin" in session:
-        return render_template("home.html", username=session["username"])
-
-    return redirect(url_for("login"))
+    if ("loggedin" in session and request.method == "GET"):
+        # Get user's posts from database
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(
+            "SELECT users_tb.username, posts_tb.description, posts_tb.likes, posts_tb.creation_date, posts_tb.media_url FROM posts_tb INNER JOIN users_tb ON posts_tb.user_id = users_tb.id WHERE posts_tb.user_id = %s;",
+            (session['id'],),
+        )
+        posts = cursor.fetchall()
+        
+        if len(posts) != 0:
+            return render_template("home.html", username=session["username"], posts=posts)
+        else:
+            msg = "No Posts..."
+            
+    return render_template("home.html", username=session["username"], msg=msg)
 
 
 @application.route("/profile")
@@ -175,12 +189,12 @@ def create_post():
     if (
         "loggedin" in session
         and request.method == "POST"
-        and "post-textbox" in request.form
+        and "create-post-textbox" in request.form
     ):
-        post_description = request.form["post-textbox"]
+        post_description = request.form["create-post-textbox"]
 
         # Check if there's a post media (this is optional)
-        post_media = request.form["post-media"]
+        post_media = request.form["create-post-media"]
         
         # Get current datetime
         current_datetime = datetime.now()

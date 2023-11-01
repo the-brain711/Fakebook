@@ -164,11 +164,30 @@ nav h1 {
     row-gap: 2rem;
 }
 
-.post-text {
+.create-post-textbox {
     height: 20vh;
 }
 
-.post-text::placeholder {
+.create-post-textbox::placeholder {
     text-align: left;
     vertical-align: top;
+}
+
+/* Timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+}
+
+.timeline .post {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 2rem;
+}
+
+.timeline .post .row1 label{
+    font-size: medium;
+    color: darkgrey;
 }
