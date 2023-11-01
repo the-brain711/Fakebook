@@ -14,9 +14,9 @@
             <label id="close-post-popup">X</label>
         </div>
 
-        <form action="{{ url_for('post') }}" method="post" autocomplete="off">
+        <form action="{{ url_for('create_post') }}" method="post" autocomplete="off">
             <textarea rows="5" name="post-textbox" id="post-textbox" placeholder="What's on your mind {{ username }}?"
-                required></textarea>
+                maxlength="500" required></textarea>
             <input type="file" name="post-media" id="post-media" accept="image/png, image/jpeg" />
             <input type="submit" value="Create Post" />
             <div class="login-msg">{{ msg }}</div>
@@ -38,7 +38,7 @@
     </script>
 </div>
 
-<div>
-    <h1>Posts</h1>
+<div class="timeline">
+    
 </div>
 {% endblock %}

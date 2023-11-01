@@ -26,8 +26,8 @@
             <div class="login-container">
                 <form action="{{ url_for('login') }}" method="post">
                     <div class="login-msg">{{ msg }}</div>
-                    <input type="text" name="username" id="username" placeholder="Username" required>
-                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <input type="text" name="username" id="username" placeholder="Username" maxlength="25" required>
+                    <input type="password" name="password" id="password" placeholder="Password" maxlength="25" required>
                     <input class="login-button" type="submit" value="Login">
                 </form>
 
