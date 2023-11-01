@@ -4,7 +4,6 @@ from flask_mysqldb import MySQL
 from datetime import datetime
 import MySQLdb.cursors
 import MySQLdb.cursors, re, hashlib
-
 ##### DEPENDENCIES #####
 
 ##### INITIALIZE FLASK #####
@@ -26,8 +25,15 @@ application.config["MYSQL_DB"] = "fakebook_db"
 
 db = MySQL(application)
 ##### INITIALIZE MYSQL #####
-
-
+@application.route('/logout')
+def logout():
+    # Remove session data, this will logout the user
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    session.pop('username', None)
+    
+    return redirect(url_for('login'))
+  
 ##### ROUTES #####
 @application.route("/", methods=["GET", "POST"])
 def login():
