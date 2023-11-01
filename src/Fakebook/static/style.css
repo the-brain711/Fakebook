@@ -1,0 +1,199 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    font-size: 1.125rem;
+    line-height: 1.5;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-around;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+nav h1 {
+    color: maroon;
+    text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.nav-links {
+    display: flex;
+    column-gap: 1rem;
+    text-align: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Login Page */
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 3rem;
+    height: 80vh;
+    margin-inline: auto;
+}
+
+.login-greeter {
+    text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.login-greeter h1 {
+    color: maroon;
+}
+
+.login-greeter label {
+    font-size: larger;
+}
+
+.login-container {
+    background-color: white;
+    margin-top: 3rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.login-container form div {
+    font-size: small;
+    color: red;
+}
+
+.login-button {
+    font-weight: bold;
+}
+
+.login-container a {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.25rem;
+    font-size: small;
+}
+
+.login-container button {
+    margin-top: 1.5rem;
+}
+
+
+/* Signup Page */
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+
+/* Home Page */
+.home-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 45vw;
+}
+
+.home-header button {
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color: maroon;
+    color: white;
+    font-weight: bold;
+    height: 3rem;
+}
+
+.home-header button:hover {
+    background-color: rgb(95, 3, 3);
+}
+
+.home-header dialog {
+    width: 50vh;
+}
+
+.home-header dialog::backdrop {
+    background-color: #f0f2f5d5;
+}
+
+.home-header dialog div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.home-header dialog div label {
+    font-size: x-large;
+}
+
+.home-header dialog form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.create-post-textbox {
+    height: 20vh;
+}
+
+.create-post-textbox::placeholder {
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+}
+
+.timeline .post {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 2rem;
+}
+
+.timeline .post .top {
+    display: flex;
+    align-items: center;
+    column-gap: 3rem;
+}
+
+.timeline .post .top label{
+    font-size: medium;
+    color: darkgrey;
+}

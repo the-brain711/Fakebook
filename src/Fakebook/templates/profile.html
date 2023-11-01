@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}Fakebook - Profile{% endblock %}
+
+{% block content %}
+<div class="profile">
+    <p>Your user account details are below:</p>
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td>{{ user['username'] }}</td>
+        </tr>
+
+        <tr>
+            <td>Password:</td>
+            <td>*********</td>
+        </tr>
+
+        <tr>
+            <td>Email:</td>
+            <td>{{ user['email'] }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
