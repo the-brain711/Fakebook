@@ -1,6 +1,7 @@
 ##### DEPENDENCIES #####
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
+from datetime import datetime
 import MySQLdb.cursors
 import MySQLdb.cursors, re, hashlib
 
@@ -51,8 +52,7 @@ def login():
         password = hashed_password.hexdigest()
 
         # Check if user exists in database
-        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
-        # cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
             "SELECT * FROM users_tb WHERE username = %s AND password = %s",
             (
@@ -103,8 +103,7 @@ def signup():
         email = request.form["email"]
 
         # Check if user exists in database
-        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
-        # cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("SELECT * FROM users_tb WHERE username = %s", (username,))
         user = cursor.fetchone()
 
@@ -132,10 +131,11 @@ def signup():
                     email,
                 ),
             )
-            db.connect.commit()
-            # db.connection.commit()
+            db.connection.commit()
+            
             msg = "You have successfully signed up to Fakebook."
             return redirect(url_for("login"))
+        
     # If form is empty or missing 1 box
     elif request.method == "POST":
         msg = "Please fill out the form completely."
@@ -156,8 +156,8 @@ def home():
 def profile():
     # Check if user is logged in
     if "loggedin" in session:
-        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
-        # cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("SELECT * FROM users_tb WHERE id = %s", (session["id"],))
         user = cursor.fetchone()
 
@@ -180,51 +180,32 @@ def post():
 
         # Check if there's a post media (this is optional)
         post_media = request.form["post-media"]
+        
+        # Get current datetime
+        current_datetime = datetime.now()
 
         # Insert post into database
-        cursor = db.connect.cursor(MySQLdb.cursors.DictCursor)
-        # cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
-            "INSERT INTO posts_tb "
-        )
-        user = cursor.fetchone()
-
-        # If user exists, show error and validation checks
-        if user:
-            msg = "Username is already taken. Please choose a different one."
-        elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            msg = "Invalid email address."
-        elif not re.match(r"[A-Za-z0-9]+", username):
-            msg = "Username must contain only characters and numbers."
-        elif not username or not password or not email:
-            msg = "Please fill out the form completely."
-        else:
-            # Hash the password
-            hashed_password = password + application.secret_key
-            hashed_password = hashlib.sha1(hashed_password.encode())
-            password = hashed_password.hexdigest()
-
-            # Insert new account into database
-            cursor.execute(
-                "INSERT INTO users_tb (username, password, email) VALUES(%s, %s, %s);",
-                (
-                    username,
-                    password,
-                    email,
-                ),
+            "INSERT INTO posts_tb (user_id, description, creation_date) VALUES(%s, %s, %s)",
+            (
+                session['id'],
+                post_description,
+                current_datetime,
             )
-            db.connect.commit()
-            # db.connection.commit()
-            msg = "You have successfully signed up to Fakebook."
-            return redirect(url_for("home"))
+        )
+        db.connection.commit()
+        
+        return redirect(url_for("home"))
+        
     # If form is empty or missing 1 box
     elif request.method == "POST":
         msg = "Post description is required to create a post."
 
     return render_template("home.html", msg=msg)
 
-
 ##### ROUTES #####
+
 
 # Starts the flask application
 if __name__ == "__main__":

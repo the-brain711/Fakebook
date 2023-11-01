@@ -11,10 +11,10 @@
         <div>
             <h2></h2>
             <h2>Create Post</h2>
-            <h2 id="close-post-popup">X</h2>
+            <label id="close-post-popup">X</label>
         </div>
 
-        <form action="" autocomplete="off">
+        <form action="{{ url_for('post') }}" method="post" autocomplete="off">
             <textarea rows="5" name="post-textbox" id="post-textbox" placeholder="What's on your mind {{ username }}?"
                 required></textarea>
             <input type="file" name="post-media" id="post-media" accept="image/png, image/jpeg" />
