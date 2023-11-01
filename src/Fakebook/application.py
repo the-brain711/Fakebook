@@ -223,6 +223,35 @@ def create_post():
 
     return render_template("home.html", msg=msg)
 
+
+@application.route("/like_post", methods=["POST"])
+def like_post():
+    # Output message if something goes wrong
+    msg = ""
+
+    # Check if POST request has at least a post description
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "like_button" in request.form
+    ):
+        # Insert liking of post into database
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(
+            "UPDATE posts_tb SET likes = likes + 1 WHERE post_id = %s;",
+            (
+                session['id'],
+            )
+        )
+        db.connection.commit()
+        db.connection.close()
+        
+        return redirect(url_for("home"))
+    else:
+        msg = "Failed to like post."
+
+    return render_template("home.html", msg=msg)
+
 ##### ROUTES #####
 
 

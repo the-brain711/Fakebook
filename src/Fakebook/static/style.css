@@ -187,7 +187,13 @@ nav h1 {
     padding: 2rem;
 }
 
-.timeline .post .row1 label{
+.timeline .post .top {
+    display: flex;
+    align-items: center;
+    column-gap: 3rem;
+}
+
+.timeline .post .top label{
     font-size: medium;
     color: darkgrey;
 }
