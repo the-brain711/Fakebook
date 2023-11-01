@@ -43,11 +43,19 @@
     {% else %}
     {% for post in posts %}
     <div class="post">
-        <div class="row1">
+        <div class="top">
             <h4>{{ post['username'] }}</h4>
             <label>{{ post['creation_date'] }}</label>
+            <label>Likes: {{ post['likes'] }}</label>
         </div>
+        <hr class="solid">
         <p>{{ post['description'] }}</p>
+        <hr class="solid">
+        <div class="buttons">
+            <form action="{{ url_for('like_post') }}" method="post" autocomplete="off">
+                <input type="submit" name="like_button" id="like_button" value="Like" />
+            </form>
+        </div>
     </div>
     {% endfor %}
     {% endif %}
