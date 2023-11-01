@@ -154,10 +154,13 @@ def home():
         # Get user's posts from database
         cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
-            "SELECT users_tb.username, posts_tb.description, posts_tb.likes, posts_tb.creation_date, posts_tb.media_url FROM posts_tb INNER JOIN users_tb ON posts_tb.user_id = users_tb.id WHERE posts_tb.user_id = %s;",
+            "SELECT users_tb.username, posts_tb.description, posts_tb.likes, posts_tb.creation_date, posts_tb.media_url FROM posts_tb INNER JOIN users_tb ON posts_tb.user_id = users_tb.id WHERE posts_tb.user_id = %s ORDER BY posts_tb.creation_date DESC",
             (session['id'],),
         )
         posts = cursor.fetchall()
+        
+        for post in posts:
+            post['creation_date'] = post['creation_date'].strftime("%b %d, %Y %I:%M %p")
         
         if len(posts) != 0:
             return render_template("home.html", username=session["username"], posts=posts)
