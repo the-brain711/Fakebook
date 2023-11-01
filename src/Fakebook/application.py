@@ -132,6 +132,7 @@ def signup():
                 ),
             )
             db.connection.commit()
+            db.connection.close()
             
             msg = "You have successfully signed up to Fakebook."
             return redirect(url_for("login"))
@@ -165,8 +166,8 @@ def profile():
         return render_template("profile.html", user=user)
 
 
-@application.route("/post", methods=["POST"])
-def post():
+@application.route("/create_post", methods=["POST"])
+def create_post():
     # Output message if something goes wrong
     msg = ""
 
@@ -195,6 +196,7 @@ def post():
             )
         )
         db.connection.commit()
+        db.connection.close()
         
         return redirect(url_for("home"))
         
