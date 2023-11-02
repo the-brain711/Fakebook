@@ -18,7 +18,7 @@
             <textarea rows="5" name="create-post-textbox" id="create-post-textbox"
                 placeholder="What's on your mind {{ username }}?" maxlength="500" required></textarea>
             <input type="file" name="create-post-media" id="create-post-media" accept="image/png, image/jpeg" />
-            <input type="submit" value="Create Post" />
+            <input type="submit" name="create-post-submit" id="create-post-submit" value="Create Post" />
         </form>
     </dialog>
 
@@ -52,8 +52,8 @@
         <p>{{ post['description'] }}</p>
         <hr class="solid">
         <div class="buttons">
-            <form action="{{ url_for('like_post') }}" method="post" autocomplete="off">
-                <input type="submit" name="like_button" id="like_button" value="Like" />
+            <form action="{{ url_for('like_post') }}" method="post">
+                <input type="submit" name="like-post-submit" id="like-post-submit" value="Like" />
             </form>
         </div>
     </div>
