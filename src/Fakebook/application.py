@@ -233,18 +233,18 @@ def like_post():
     if (
         "loggedin" in session
         and request.method == "POST"
-        and "like_button" in request.form
+        and "like-post-submit" in request.form
     ):
         # Insert liking of post into database
         cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
             "UPDATE posts_tb SET likes = likes + 1 WHERE post_id = %s;",
             (
-                session['id'],
+                session['id'], # Placeholder. Need to find way to get post id
             )
         )
         db.connection.commit()
-        db.connection.close()
+        #db.connection.close()
         
         return redirect(url_for("home"))
     else:
