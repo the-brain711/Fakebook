@@ -1,4 +1,4 @@
-from .models import *
+from .models.user import User
 from flask import current_app as app
 from flask import Blueprint, render_template, redirect, request, url_for, session
 
