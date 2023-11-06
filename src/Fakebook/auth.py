@@ -25,7 +25,7 @@ def login():
         password = hashed_password.hexdigest()
 
         # Check if user exists in database
-        db: MySQL = app.db
+        db = app.config['DATABASE']
         cursor: MySQLdb.cursors.Cursor = db.connection.cursor(
             MySQLdb.cursors.DictCursor
         )
@@ -43,7 +43,7 @@ def login():
             session["loggedin"] = True
             session["id"] = user["id"]
 
-            return redirect(url_for("home"))
+            return redirect(url_for("views.home"))
         else:
             msg = "Invalid username or password. Please try again."
 
@@ -56,7 +56,7 @@ def logout():
     session.pop("loggedin", None)
     session.pop("id", None)
 
-    return redirect(url_for("login"))
+    return redirect(url_for("auth.login"))
 
 
 @auth.route("/signup", methods=["GET", "POST"])
@@ -77,7 +77,7 @@ def signup():
         email = request.form["email"]
 
         # Check if user exists in database
-        db: MySQL = app.db
+        db = app.config['DATABASE']
         cursor: MySQLdb.cursors.Cursor = db.connection.cursor(
             MySQLdb.cursors.DictCursor
         )
@@ -112,7 +112,7 @@ def signup():
             db.connection.close()
 
             # msg = "You have successfully signed up for Fakebook!"
-            return redirect(url_for("login"))
+            return redirect(url_for("auth.login"))
 
     # If the signup page has an empty box
     elif request.method == "POST":
