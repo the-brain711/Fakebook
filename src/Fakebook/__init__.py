@@ -1,32 +1,30 @@
-import os
-
 from flask import Flask
+from flask_mysqldb import MySQL
 
 
-def create_app(test_config=None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+def create_app():
+    app = Flask(__name__)
+    db = connect_db(app)
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
-
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
-    # a simple page that says hello
-    @app.route('/')
-    def hello():
-        return 'Hello, World!'
+    # Change this to your secret key (it can be anything, it's for extra protection)
+    app.config["SECRET_KEY"] = "secret"
+    app.config["DATABASE"] = db
+    
+    # Import blueprints
+    from .auth import auth
+    from .views import views
+    
+    app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(views, url_prefix='/')
 
     return app
+
+
+def connect_db(app):
+    app.config["MYSQL_HOST"] = "fakebook-db.ch5ziarjkczw.us-east-1.rds.amazonaws.com"
+    app.config["MYSQL_PORT"] = 3306
+    app.config["MYSQL_USER"] = "admin"
+    app.config["MYSQL_PASSWORD"] = "Fakebook!db01"
+    app.config["MYSQL_DB"] = "fakebook_db"
+    
+    return MySQL(app)
