@@ -17,3 +17,4 @@ class Post:
         self.likes = likes
         self.creation_date = creation_date
         self.comments = Comment()
+        

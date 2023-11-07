@@ -80,8 +80,8 @@ def like_post():
         post_id = request.form["post-id"]
         
         db = app.config['DATABASE']
-        user = User(db, session["id"])
-        user.like_post(post_id)
+        post = User(db, session['id'])
+        post.like_post(post_id=post_id)
 
         return redirect(url_for("views.home"))
     else:
