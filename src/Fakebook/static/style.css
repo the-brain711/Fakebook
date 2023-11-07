@@ -180,20 +180,50 @@ nav h1 {
     row-gap: 5rem;
 }
 
-.timeline .post {
+.box {
     background-color: white;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     padding: 2rem;
 }
 
-.timeline .post .top {
+.box-details {
     display: flex;
     align-items: center;
     column-gap: 3rem;
 }
 
-.timeline .post .top label{
+.box-details label {
+    font-size: medium;
+    color: darkgrey;
+}
+
+.box-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.box-comment {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin-top: 2rem;
+}
+
+.comment-area {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.comment-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment-details label {
     font-size: medium;
     color: darkgrey;
 }

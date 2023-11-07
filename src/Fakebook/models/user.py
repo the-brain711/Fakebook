@@ -80,6 +80,7 @@ class User(Person):
     def like_post(self, post_id: int):
         db = self.db
         cursor = self.cursor
+        
         cursor.execute(
             "UPDATE posts_tb INNER JOIN liked_posts_tb ON posts_tb.post_id = liked_posts_tb.liked_post_id SET posts_tb.likes = posts_tb.likes + 1, liked_posts_tb.liked_status = 1 WHERE posts_tb.post_id = %s AND posts_tb.user_id = %s AND liked_posts_tb.liked_status = 0",
             (
@@ -87,7 +88,6 @@ class User(Person):
                 self.user_id,
             ),
         )
-
         db.connection.commit()
         db.connection.close()
 
