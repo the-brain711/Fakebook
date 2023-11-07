@@ -22,8 +22,5 @@ class Timeline:
             for post in posts:
                 item = Post(self.db, post["post_id"])
                 self.posts[post["post_id"]] = item
-
-            return self.posts
-
         else:
             return None

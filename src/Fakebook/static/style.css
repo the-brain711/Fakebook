@@ -227,3 +227,12 @@ nav h1 {
     font-size: medium;
     color: darkgrey;
 }
+
+.comment form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment form textarea {
+    width: 85%;
+}

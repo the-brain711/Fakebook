@@ -27,6 +27,7 @@
         <h4>Comments</h4>
         {% if post['comments'] %}
         {% for comment_id, comment in post['comments'].items() %}
+        {% if comment['comment_replied_to'] == None %}
         <div class="comment">
             <div class="comment-details">
                 <h4>{{ comment['commenter_name'] }}</h4>
@@ -34,7 +35,15 @@
             </div>
             <p>{{ comment['text'] }}</p>
             <hr class="solid">
+            <form action="{{ url_for('views.reply') }}" method="post">
+                <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                <input type="hidden" name="comment-id" id="post-id" value="{{ comment_id }}">
+                <textarea rows="2" name="reply-textbox" id="reply-textbox" placeholder="Reply Here" maxlength="250"
+                    required></textarea>
+                <input type="submit" name="reply-submit" id="reply-submit" value="Reply" />
+            </form>
         </div>
+        {% endif %}
         {% endfor %}
         {% else %}
         <h4>No Comments...</h4>

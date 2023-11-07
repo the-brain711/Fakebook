@@ -15,7 +15,9 @@ class Post:
         creation_date: datetime = None,
     ):
         self.db = db
-        self.cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        
+        if db:
+            self.cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
 
         self.post_id = post_id
         self.user_id = user_id
@@ -25,7 +27,7 @@ class Post:
         self.creation_date = creation_date
 
         self.__get_post()
-        self.comments = self.__get_comments()
+        self.comments = dict()
         
     def __get_post(self):
         cursor = self.cursor
@@ -44,7 +46,7 @@ class Post:
             self.likes = post['likes']
             self.creation_date = post['creation_date'].strftime("%b %d, %Y %I:%M %p")
 
-    def __get_comments(self):
+    def get_comments(self):
         cursor = self.cursor
         cursor.execute(
             "SELECT users_tb.username, comments_tb.comment_id, comments_tb.commenter_id, comments_tb.comment, comments_tb.creation_date, comments_tb.comment_replied_to FROM comments_tb INNER JOIN posts_tb ON comments_tb.post_id = posts_tb.post_id INNER JOIN users_tb ON users_tb.id = comments_tb.commenter_id WHERE posts_tb.post_id = %s ORDER BY comments_tb.creation_date DESC",
@@ -53,17 +55,15 @@ class Post:
         comments = cursor.fetchall()
 
         if comments:
-            comments_dict = dict()
             for comment in comments:
                 item = Comment(
-                    comment["comment_id"],
-                    comment["commenter_id"],
-                    comment["username"],
-                    comment["comment"],
-                    comment["creation_date"].strftime("%b %d, %Y %I:%M %p")
+                    comment_id=comment["comment_id"],
+                    commenter_id=comment["commenter_id"],
+                    commenter_name=comment["username"],
+                    text=comment["comment"],
+                    creation_date=comment["creation_date"].strftime("%b %d, %Y %I:%M %p"),
+                    comment_replied_to=comment["comment_replied_to"]
                 )
-                comments_dict[comment["comment_id"]] = item
-                
-            return comments_dict
+                self.comments[comment["comment_id"]] = item
         else:
             return None
