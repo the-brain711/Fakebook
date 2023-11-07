@@ -4,9 +4,8 @@
 
 {% block content %}
 {% if msg %}
-<h3> {{ msg }}</h3>
-{% endif %}
-
+<h3>{{ msg }}</h3>
+{% else %}
 <div class="box">
     <div class="box-details">
         <h4>{{ post['creator_name'] }}</h4>
@@ -17,16 +16,17 @@
     <p>{{ post['description'] }}</p>
     <hr class="solid">
 
-    <form class="box-comment" action="" method="post" autocomplete="on">
+    <form class="box-comment" action="{{ url_for('views.comment') }}" method="post" autocomplete="on">
         <textarea rows="5" name="comment-textbox" id="comment-textbox" placeholder="What's on your mind {{ username }}?"
             maxlength="500" required></textarea>
+        <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
         <input type="submit" name="comment-submit" id="comment-submit" value="Comment" />
     </form>
 
     <div class="comment-area">
         <h4>Comments</h4>
         {% if post['comments'] %}
-        {% for comment in post['comments'] %}
+        {% for comment_id, comment in post['comments'].items() %}
         <div class="comment">
             <div class="comment-details">
                 <h4>{{ comment['commenter_name'] }}</h4>
@@ -41,5 +41,6 @@
         {% endif %}
     </div>
 </div>
+{% endif %}
 
 {% endblock %}

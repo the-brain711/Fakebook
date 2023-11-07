@@ -53,7 +53,7 @@ class Post:
         comments = cursor.fetchall()
 
         if comments:
-            comments_list = []
+            comments_dict = dict()
             for comment in comments:
                 item = Comment(
                     comment["comment_id"],
@@ -62,8 +62,8 @@ class Post:
                     comment["comment"],
                     comment["creation_date"].strftime("%b %d, %Y %I:%M %p")
                 )
-                comments_list.append(item)
+                comments_dict[comment["comment_id"]] = item
                 
-            return comments_list
+            return comments_dict
         else:
             return None

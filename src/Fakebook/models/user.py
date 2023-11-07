@@ -91,8 +91,23 @@ class User(Person):
         db.connection.commit()
         db.connection.close()
 
-    def make_comment():
-        pass
+    def make_comment(self, post_id: int, comment_text: str):
+        db = self.db
+        cursor = self.cursor
+        creation_date = datetime.now()
+        
+        cursor.execute(
+            "INSERT INTO comments_tb (commenter_id, post_id, comment, creation_date) VALUES(%s, %s, %s, %s)",
+            (
+                self.user_id,
+                post_id,
+                comment_text,
+                creation_date,
+            ),
+        )
+        
+        db.connection.commit()
+        db.connection.close()
 
     def send_friend_request():
         pass
