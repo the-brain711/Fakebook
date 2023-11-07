@@ -14,12 +14,11 @@
             <label id="close-post-popup">X</label>
         </div>
 
-        <form action="{{ url_for('post') }}" method="post" autocomplete="off">
-            <textarea rows="5" name="post-textbox" id="post-textbox" placeholder="What's on your mind {{ username }}?"
-                required></textarea>
-            <input type="file" name="post-media" id="post-media" accept="image/png, image/jpeg" />
-            <input type="submit" value="Create Post" />
-            <div class="login-msg">{{ msg }}</div>
+        <form action="{{ url_for('views.create_post') }}" method="post" autocomplete="off">
+            <textarea rows="5" name="create-post-textbox" id="create-post-textbox"
+                placeholder="What's on your mind {{ username }}?" maxlength="500" required></textarea>
+            <input type="file" name="create-post-media" id="create-post-media" accept="image/png, image/jpeg" />
+            <input type="submit" name="create-post-submit" id="create-post-submit" value="Create Post" />
         </form>
     </dialog>
 
@@ -38,7 +37,33 @@
     </script>
 </div>
 
-<div>
-    <h1>Posts</h1>
+<div class="timeline">
+    {% if msg %}
+    <h3>{{ msg }}</h3>
+    {% else %}
+    {% for post in posts %}
+    <div class="box">
+        <div class="box-details">
+            <h4>{{ post['creator_name'] }}</h4>
+            <label>{{ post['creation_date'] }}</label>
+            <label>Likes: {{ post['likes'] }}</label>
+        </div>
+        <hr class="solid">
+        <p>{{ post['description'] }}</p>
+        <hr class="solid">
+        <div class="box-buttons">
+            <form action="{{ url_for('views.like_post') }}" method="post">
+                <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                <input type="submit" name="like-post-submit" id="like-post-submit" value="Like">
+            </form>
+
+            <form action="{{ url_for('views.view_comments') }}" method="get">
+                <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                <input type="submit" name="comment-post-submit" id="comment-post-submit" value="Comment">
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
