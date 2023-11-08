@@ -2,6 +2,7 @@ from .datatypes import Name, Address
 from .person import Person
 from .timeline import Timeline
 from .friendslist import FriendsList
+from .enums import FriendRequestErrors
 from datetime import datetime
 import MySQLdb.cursors
 
@@ -82,7 +83,7 @@ class User(Person):
     def like_post(self, post_id: int):
         db = self.db
         cursor = self.cursor
-        
+
         cursor.execute(
             "UPDATE posts_tb INNER JOIN liked_posts_tb ON posts_tb.post_id = liked_posts_tb.liked_post_id SET posts_tb.likes = posts_tb.likes + 1, liked_posts_tb.liked_status = 1 WHERE posts_tb.post_id = %s AND posts_tb.user_id = %s AND liked_posts_tb.liked_status = 0",
             (
@@ -96,5 +97,43 @@ class User(Person):
     def make_comment():
         pass
 
-    def send_friend_request():
-        pass
+    def send_friend_request(self, friend_username: str):
+        db = self.db
+        cursor = db.connection.cursor()
+        friendship_date = datetime.now()
+
+        # Get friend's user id
+        cursor.execute(
+            "SELECT id FROM users_tb WHERE username = %s",
+            (friend_username,),
+        )
+        friend_id = cursor.fetchone()
+        if friend_id == None:
+            return FriendRequestErrors.INVALID_USER
+        else:
+            friend_id = friend_id[0]
+
+        # Check for existing friend request
+        cursor.execute(
+            "SELECT CASE WHEN EXISTS (SELECT * FROM friends_tb WHERE friend_requester_id = %s AND friend_accepter_id = %s) THEN TRUE ELSE FALSE END AS BOOL",
+            (
+                self.user_id,
+                friend_id,
+            ),
+        )
+        does_friend_request_exist = cursor.fetchone()[0]
+        if does_friend_request_exist == True:
+            return FriendRequestErrors.FRIEND_REQUEST_ALREADY_EXISTS
+
+        # Send friend request to friend
+        cursor.execute(
+            "INSERT INTO friends_tb (friend_requester_id, friend_accepter_id, friendship_date) VALUES (%s, %s, %s)",
+            (
+                self.user_id,
+                friend_id,
+                friendship_date,
+            ),
+        )
+
+        db.connection.commit()
+        db.connection.close()

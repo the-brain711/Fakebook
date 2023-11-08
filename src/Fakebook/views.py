@@ -1,5 +1,6 @@
 from .models.user import User
 from .models.post import Post
+from .models.enums import FriendRequestErrors
 from flask import current_app as app
 from flask import Blueprint, render_template, redirect, request, url_for, session
 
@@ -34,21 +35,48 @@ def friends():
     if "loggedin" in session:
         # Displays error message on website
         msg = ""
-        
+
         if request.method == "GET":
             db = app.config["DATABASE"]
             user = User(db, session["id"])
             friends = user.friends_list.friends
-            
+
             if friends:
                 return render_template("friends.html", friends=friends)
             else:
                 msg = "No Friends..."
-        
-        return render_template("friends.html")
     else:
         msg = "Failed to load friends list"
+
+    return render_template("friends.html", msg=msg)
+
+
+@views.route("/send_friend_request", methods=["POST"])
+def send_friend_request():
+    # Display error message on website
+    msg = ""
+
+    # Check if POST request has at least a post description
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "searchbox-friends" in request.form
+    ):
+        friend_username = request.form["searchbox-friends"]
+        db = app.config["DATABASE"]
         
+        user = User(db, session["id"])
+        status = user.send_friend_request(friend_username)
+        
+        if status == FriendRequestErrors.INVALID_USER:
+            msg = "Could not find user: " + friend_username
+        elif status == FriendRequestErrors.FRIEND_REQUEST_ALREADY_EXISTS:
+            msg = "Friend request for " + friend_username + " already exists."            
+        else:
+            return redirect(url_for("views.friends"))
+    else:
+        msg = "Unable to send friend request..."
+
     return render_template("friends.html", msg=msg)
 
 
@@ -130,7 +158,7 @@ def view_comments():
 
         db = app.config["DATABASE"]
         post = Post(db, post_id=post_id)
-        
+
         if post:
             return render_template("post.html", post=post)
         else:

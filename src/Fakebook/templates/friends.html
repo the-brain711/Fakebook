@@ -3,27 +3,30 @@
 {% block title %}Fakebook - Friends{% endblock %}
 
 {% block content %}
-{% if msg %}
-<h3> {{ msg }}</h3>
-{% endif %}
 
 <div class="friends-list-header">
-    <h3>Friends List</h3>
-    <form action="" method="get">
+    <h3>Search for Friends</h3>
+    <form action="{{ url_for('views.send_friend_request') }}" method="post">
         <input type="search" name="searchbox-friends" id="searchbox-friends" autocomplete="no"
-            placeholder="Search for friends" required>
-        <input type="submit" name="search-friends-submit" id="search-friends-submit" value="Search">
+            placeholder="Enter friend's username" required>
+        <input type="submit" name="search-friends-submit" id="search-friends-submit" value="Send Friend Request">
     </form>
+    {% if msg %}
+    <h4> {{ msg }}</h4>
+    {% endif %}
 </div>
 
-<div class="friends-list-container">
-    {% for friend_id, friend in friends.items() %}
-    <div class="box">
-        <h4>{{ friend['friend_name'] }}</h4>
+{% if friends %}
+<div>
+    <h3>Friends List</h3>
+    <div class="friends-list-container">
+        {% for friend_id, friend in friends.items() %}
+        <div class="box">
+            <h4>{{ friend['friend_name'] }}</h4>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
-
-
+{% endif %}
 
 {% endblock %}
