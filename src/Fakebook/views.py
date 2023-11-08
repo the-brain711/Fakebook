@@ -44,9 +44,9 @@ def friends():
             if friends:
                 return render_template("friends.html", friends=friends)
             else:
-                msg = "No Friends..."
+                return render_template("friends.html", friends=None)
     else:
-        msg = "Failed to load friends list"
+        msg = "Failed to load friends page"
 
     return render_template("friends.html", msg=msg)
 

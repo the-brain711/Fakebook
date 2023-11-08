@@ -16,13 +16,13 @@ class User(Person):
         self.username = ""
         self.creation_date: datetime = None
         self.profile_picture_url = ""
+        self.__get_user_data()
 
         self.timeline = Timeline(db, user_id)
         self.friends_list = FriendsList(db, user_id)
+        self.friend_requests = self.__get_friend_requests()
 
-        self.__get_user()
-
-    def __get_user(self):
+    def __get_user_data(self):
         cursor = self.cursor
         cursor.execute(
             "SELECT * FROM fakebook_db.users_tb WHERE id = %s",
@@ -48,6 +48,9 @@ class User(Person):
                 "date_of_birth"
             ]  # .strftime("%b %d, %Y %I:%M %p")
             self.creation_date = user["creation_date"]
+            
+    def __get_friend_requests(self):
+        pass
 
     def make_post(self, post_description: str):
         db = self.db
