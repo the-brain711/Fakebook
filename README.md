@@ -58,7 +58,7 @@ Brian Nguyen(the-brain711): Developer
 
 Caleb Hickman-Thomas(CaramelHeaven1): Developer
 
-Christian Johnson(CJhonson1234): Developer 
+Christian Johnson(CJohnson1234): Developer 
 
 Connor White(TheConnorGW): Developer
 
