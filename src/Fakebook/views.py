@@ -29,6 +29,29 @@ def home():
     return render_template("home.html", username=username, msg=msg)
 
 
+@views.route("/friends")
+def friends():
+    if "loggedin" in session:
+        # Displays error message on website
+        msg = ""
+        
+        if request.method == "GET":
+            db = app.config["DATABASE"]
+            user = User(db, session["id"])
+            friends = user.friends_list.friends
+            
+            if friends:
+                return render_template("friends.html", friends=friends)
+            else:
+                msg = "No Friends..."
+        
+        return render_template("friends.html")
+    else:
+        msg = "Failed to load friends list"
+        
+    return render_template("friends.html", msg=msg)
+
+
 @views.route("/profile")
 def profile():
     if "loggedin" in session:

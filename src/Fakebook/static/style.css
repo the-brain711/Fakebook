@@ -227,3 +227,16 @@ nav h1 {
     font-size: medium;
     color: darkgrey;
 }
+
+.friends-list-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.friends-list-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 2rem;
+    column-gap: 2rem;
+}

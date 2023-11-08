@@ -1,6 +1,7 @@
 from .datatypes import Name, Address
 from .person import Person
 from .timeline import Timeline
+from .friendslist import FriendsList
 from datetime import datetime
 import MySQLdb.cursors
 
@@ -16,6 +17,7 @@ class User(Person):
         self.profile_picture_url = ""
 
         self.timeline = Timeline(db, user_id)
+        self.friends_list = FriendsList(db, user_id)
 
         self.__get_user()
 
