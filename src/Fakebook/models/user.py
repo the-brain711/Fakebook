@@ -48,7 +48,7 @@ class User(Person):
                 "date_of_birth"
             ]  # .strftime("%b %d, %Y %I:%M %p")
             self.creation_date = user["creation_date"]
-            
+
     def __get_friend_requests(self):
         pass
 
@@ -97,9 +97,6 @@ class User(Person):
         db.connection.commit()
         db.connection.close()
 
-    def make_comment():
-        pass
-
     def send_friend_request(self, friend_username: str):
         db = self.db
         cursor = db.connection.cursor()
@@ -135,6 +132,43 @@ class User(Person):
                 self.user_id,
                 friend_id,
                 friendship_date,
+            ),
+        )
+
+        db.connection.commit()
+        db.connection.close()
+
+    def make_comment(self, post_id: int, comment_text: str):
+        db = self.db
+        cursor = self.cursor
+        creation_date = datetime.now()
+
+        cursor.execute(
+            "INSERT INTO comments_tb (commenter_id, post_id, comment, creation_date) VALUES(%s, %s, %s, %s)",
+            (
+                self.user_id,
+                post_id,
+                comment_text,
+                creation_date,
+            ),
+        )
+
+        db.connection.commit()
+        db.connection.close()
+
+    def reply_to_comment(self, post_id: int, comment_id: int, reply_text: str):
+        db = self.db
+        cursor = self.cursor
+        creation_date = datetime.now()
+
+        cursor.execute(
+            "INSERT INTO comments_tb (commenter_id, post_id, comment, creation_date, comment_replied_to) VALUES(%s, %s, %s, %s, %s)",
+            (
+                self.user_id,
+                post_id,
+                reply_text,
+                creation_date,
+                comment_id,
             ),
         )
 

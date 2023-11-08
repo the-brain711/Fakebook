@@ -240,3 +240,12 @@ nav h1 {
     row-gap: 2rem;
     column-gap: 2rem;
 }
+
+.comment form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment form textarea {
+    width: 85%;
+}

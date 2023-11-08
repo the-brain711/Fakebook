@@ -20,7 +20,9 @@ def home():
         db = app.config["DATABASE"]
         user = User(db, session["id"])
         username = user.username
-        posts = user.timeline.view_timeline()
+        
+        user.timeline.view_timeline()
+        posts = user.timeline.posts
 
         if len(posts) != 0:
             return render_template("home.html", username=user.username, posts=posts)
@@ -103,6 +105,7 @@ def create_post():
         post_description = request.form["create-post-textbox"]
         # Check if there's a post media (this is optional)
         # post_media = request.form["create-post-media"]
+        
         db = app.config["DATABASE"]
         user = User(db, session["id"])
         user.make_post(post_description)
@@ -158,6 +161,7 @@ def view_comments():
 
         db = app.config["DATABASE"]
         post = Post(db, post_id=post_id)
+        post.get_comments()
 
         if post:
             return render_template("post.html", post=post)
@@ -166,4 +170,70 @@ def view_comments():
     else:
         msg = "Failed to view comments."
 
+    return render_template("post.html", msg=msg)
+
+
+@views.route("/comment", methods=["POST"])
+def comment():
+    # Display error message on website
+    msg = ""
+    
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "post-id" in request.form
+        and "comment-textbox" in request.form
+    ):
+        post_id = request.form["post-id"]
+        comment_text = request.form["comment-textbox"]
+        
+        db = app.config["DATABASE"]
+        user = User(db, session["id"])
+        user.make_comment(post_id, comment_text)
+        
+        # Crashes when uncommented. Need to fix
+        #post = Post(db=db, post_id=post_id)
+        #return render_template("post.html", post=post)
+        
+        return redirect(url_for("views.home"))
+    
+    elif "loggedin" in session and request.method == "POST":
+        msg = "Text is required to make a comment."
+    else:
+        msg = "Unable to make a comment..."
+    
+    return render_template("post.html", msg=msg)
+
+
+@views.route("/reply", methods=["POST"])
+def reply():
+    # Display error message on website
+    msg = ""
+    
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "post-id" in request.form
+        and "comment-id" in request.form
+        and "reply-textbox" in request.form
+    ):
+        post_id = request.form["post-id"]
+        comment_id = request.form["comment-id"]
+        reply_text = request.form["reply-textbox"]
+        
+        db = app.config["DATABASE"]
+        user = User(db, session["id"])
+        user.reply_to_comment(post_id, comment_id, reply_text)
+        
+        # Crashes when uncommented. Need to fix
+        #post = Post(db=db, post_id=post_id)
+        #return render_template("post.html", post=post)
+        
+        return redirect(url_for("views.home"))
+    
+    elif "loggedin" in session and request.method == "POST":
+        msg = "Text is required to make a comment."
+    else:
+        msg = "Unable to make a comment..."
+    
     return render_template("post.html", msg=msg)

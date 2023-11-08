@@ -8,7 +8,7 @@ class Timeline:
         self.cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
 
         self.user_id = user_id
-        self.posts = []
+        self.posts = dict()
 
     def view_timeline(self):
         cursor = self.cursor
@@ -21,9 +21,6 @@ class Timeline:
         if posts:
             for post in posts:
                 item = Post(self.db, post["post_id"])
-                self.posts.append(item)
-
-            return self.posts
-
+                self.posts[post["post_id"]] = item
         else:
             return None
