@@ -13,8 +13,11 @@ class Timeline:
     def view_timeline(self):
         cursor = self.cursor
         cursor.execute(
-            "SELECT users_tb.username, posts_tb.* FROM posts_tb INNER JOIN users_tb ON posts_tb.user_id = users_tb.id WHERE posts_tb.user_id = %s ORDER BY posts_tb.creation_date DESC",
-            (self.user_id,),
+            "SELECT posts_tb.* FROM posts_tb WHERE posts_tb.user_id = %s OR posts_tb.user_id IN (SELECT friend_accepter_id FROM friends_tb WHERE friend_requester_id = %s) ORDER BY posts_tb.creation_date DESC",
+            (
+                self.user_id,
+                self.user_id,
+            ),
         )
         posts = cursor.fetchall()
 

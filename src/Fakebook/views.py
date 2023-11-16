@@ -37,7 +37,7 @@ def home():
         else:
             msg = "No Posts..."
 
-    return render_template("home.html", fullname=fullname, username=username, msg=msg)
+    return render_template("home.html", fullname=fullname, username=username, msg=msg, friendrequests=friend_requests)
 
 
 @views.route("/friends")
