@@ -3,11 +3,11 @@ from datetime import datetime
 
 
 class FriendRequest:
-    def __init__(self, user_id=0, friend_id=0, status=FriendRequestStatus.PENDING.value, creation_date: datetime=None):
-        self.user_id = user_id
-        self.friend_id = friend_id
+    def __init__(self, friend_accepter_id=0, friend_accepter_username="", status=FriendRequestStatus.PENDING.value, friendship_date: datetime=None):
+        self.friend_accepter_id = friend_accepter_id
+        self.friend_accepter_username = friend_accepter_username
         self.status = status
-        self.creation_date = creation_date
+        self.friendship_date = friendship_date
         pass
 
     def accept_friend_request():

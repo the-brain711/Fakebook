@@ -19,17 +19,19 @@ def home():
     if request.method == "GET":
         db = app.config["DATABASE"]
         user = User(db, session["id"])
+        fullname = f'{user.name.first_name} {user.name.last_name}'
         username = user.username
         
         user.timeline.view_timeline()
         posts = user.timeline.posts
+        friend_requests = user.friend_requests
 
         if len(posts) != 0:
-            return render_template("home.html", username=user.username, posts=posts)
+            return render_template("home.html", fullname=fullname, username=username, posts=posts, friendrequests=friend_requests)
         else:
             msg = "No Posts..."
 
-    return render_template("home.html", username=username, msg=msg)
+    return render_template("home.html", fullname=fullname, username=username, msg=msg)
 
 
 @views.route("/friends")

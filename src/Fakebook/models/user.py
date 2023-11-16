@@ -2,6 +2,7 @@ from .datatypes import Name, Address
 from .person import Person
 from .timeline import Timeline
 from .friendslist import FriendsList
+from .friendrequest import FriendRequest
 from .enums import FriendRequestErrors
 from datetime import datetime
 import MySQLdb.cursors
@@ -50,7 +51,26 @@ class User(Person):
             self.creation_date = user["creation_date"]
 
     def __get_friend_requests(self):
-        pass
+        cursor = self.cursor
+        cursor.execute(
+            "SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_accepter_id = users_tb.id WHERE friends_tb.friend_requester_id = %s AND friends_tb.friend_request_status = 'PENDING' ORDER BY friendship_date DESC",
+            (self.user_id,),
+        )
+        friend_requests = cursor.fetchall()
+        
+        if friend_requests:
+            items = list()
+            for fr in friend_requests:
+                item = FriendRequest(
+                    friend_accepter_id=fr["friend_accepter_id"],
+                    friend_accepter_username=fr["username"],
+                    friendship_date=fr["friendship_date"]
+                )
+                items.append(item)
+                
+            return items
+        else:
+            return None
 
     def make_post(self, post_description: str):
         db = self.db
