@@ -139,7 +139,26 @@ class User(Person):
 
         db.connection.commit()
         db.connection.close()
-
+        
+    def search_for_user(self, username: str):
+        db = self.db
+        cursor = db.connection.cursor()
+        
+        # Get friend's user id
+        cursor.execute(
+            "SELECT * FROM users_tb WHERE username = %s",
+            (username,),
+        )
+        user = cursor.fetchone()
+        
+        db.connection.commit()
+        db.connection.close()
+        
+        if user:
+            return user
+        else:
+            return None
+        
     def send_friend_request(self, friend_username: str):
         db = self.db
         cursor = db.connection.cursor()

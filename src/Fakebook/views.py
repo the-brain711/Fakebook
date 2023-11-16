@@ -61,6 +61,32 @@ def friends():
     return render_template("friends.html", msg=msg)
 
 
+@views.route("/search_user", methods=["GET"])
+def search_user():
+    # Display error message on website
+    msg = ""
+    
+    # Check if POST request has at least a post description
+    if (
+        "loggedin" in session
+        and request.method == "GET"
+        and "searchbar" in request.args
+        and "searchbar-submit" in request.args
+    ):
+        username = request.args["searchbar"]
+        db = app.config["DATABASE"]
+        user = User(db, session["id"])
+        searched_user = user.search_for_user(username)
+        
+        if searched_user:
+            render_template("profile.html", searcheduser=searched_user)
+        else:
+            msg = "Failed to find user " + username
+    else:
+        msg = "User search failed..."
+    return render_template("profile.html", msg=msg)
+
+
 @views.route("/send_friend_request", methods=["POST"])
 def send_friend_request():
     # Display error message on website
