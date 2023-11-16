@@ -57,7 +57,7 @@ class User(Person):
             (self.user_id,),
         )
         friend_requests = cursor.fetchall()
-        
+
         if friend_requests:
             items = dict()
             for fr in friend_requests:
@@ -66,10 +66,10 @@ class User(Person):
                     friend_requester_id=self.user_id,
                     friend_accepter_id=fr["friend_accepter_id"],
                     friend_accepter_username=fr["username"],
-                    friendship_date=fr["friendship_date"]
+                    friendship_date=fr["friendship_date"],
                 )
                 items[fr["friend_accepter_id"]] = item
-                
+
             return items
         else:
             return None
@@ -89,18 +89,18 @@ class User(Person):
             ),
         )
 
-        # Get post id from newly created post
-        cursor.execute("SELECT LAST_INSERT_ID()")
-        post_id = cursor.fetchone()
+        ## Get post id from newly created post
+        # cursor.execute("SELECT LAST_INSERT_ID()")
+        # post_id = cursor.fetchone()
 
-        # Create table to check whether user has liked a post or not. Default is not liked.
-        cursor.execute(
-            "INSERT INTO liked_posts_tb (liked_post_id, liked_user_id) VALUES(%s, %s)",
-            (
-                post_id,
-                self.user_id,
-            ),
-        )
+        ## Create table to check whether user has liked a post or not. Default is not liked.
+        # cursor.execute(
+        #    "INSERT INTO liked_posts_tb (liked_post_id, liked_user_id) VALUES(%s, %s)",
+        #    (
+        #        post_id,
+        #        self.user_id,
+        #    ),
+        # )
 
         db.connection.commit()
         db.connection.close()
@@ -110,12 +110,33 @@ class User(Person):
         cursor = self.cursor
 
         cursor.execute(
-            "UPDATE posts_tb INNER JOIN liked_posts_tb ON posts_tb.post_id = liked_posts_tb.liked_post_id SET posts_tb.likes = posts_tb.likes + 1, liked_posts_tb.liked_status = 1 WHERE posts_tb.post_id = %s AND posts_tb.user_id = %s AND liked_posts_tb.liked_status = 0",
+            "SELECT * FROM liked_posts_tb WHERE liked_post_id = %s AND liked_user_id = %s AND liked_status = 1",
             (
                 post_id,
                 self.user_id,
             ),
         )
+        
+        already_liked = cursor.fetchone()
+        if not already_liked:
+            cursor.execute(
+                "INSERT INTO liked_posts_tb (liked_post_id, liked_user_id) SELECT post_id, user_id FROM posts_tb WHERE post_id = %s AND user_id = %s;",
+                (
+                    post_id,
+                    self.user_id,
+                ),
+            )
+            
+            cursor.execute(
+                "UPDATE posts_tb SET likes = likes + 1 WHERE post_id = %s",
+                (post_id,),
+            )
+
+        # cursor.execute(
+        #    "UPDATE posts_tb INNER JOIN liked_posts_tb ON posts_tb.post_id = liked_posts_tb.liked_post_id SET posts_tb.likes = posts_tb.likes + 1, liked_posts_tb.liked_status = 1 WHERE posts_tb.post_id = %s AND liked_posts_tb.liked_status = 0",
+        #    (post_id,),
+        # )
+
         db.connection.commit()
         db.connection.close()
 
