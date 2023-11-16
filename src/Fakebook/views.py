@@ -19,15 +19,21 @@ def home():
     if request.method == "GET":
         db = app.config["DATABASE"]
         user = User(db, session["id"])
-        fullname = f'{user.name.first_name} {user.name.last_name}'
+        fullname = f"{user.name.first_name} {user.name.last_name}"
         username = user.username
-        
+
         user.timeline.view_timeline()
         posts = user.timeline.posts
         friend_requests = user.friend_requests
 
         if len(posts) != 0:
-            return render_template("home.html", fullname=fullname, username=username, posts=posts, friendrequests=friend_requests)
+            return render_template(
+                "home.html",
+                fullname=fullname,
+                username=username,
+                posts=posts,
+                friendrequests=friend_requests,
+            )
         else:
             msg = "No Posts..."
 
@@ -68,14 +74,14 @@ def send_friend_request():
     ):
         friend_username = request.form["searchbox-friends"]
         db = app.config["DATABASE"]
-        
+
         user = User(db, session["id"])
         status = user.send_friend_request(friend_username)
-        
+
         if status == FriendRequestErrors.INVALID_USER:
             msg = "Could not find user: " + friend_username
         elif status == FriendRequestErrors.FRIEND_REQUEST_ALREADY_EXISTS:
-            msg = "Friend request for " + friend_username + " already exists."            
+            msg = "Friend request for " + friend_username + " already exists."
         else:
             return redirect(url_for("views.friends"))
     else:
@@ -84,13 +90,63 @@ def send_friend_request():
     return render_template("friends.html", msg=msg)
 
 
+@views.route("/accept_friend_request", methods=["POST"])
+def accept_friend_request():
+    # Display error message on website3
+    msg = ""
+
+    # Check if it's a POST request when clicking the like button
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "friend-id" in request.form
+        and "accept-friend-request" in request.form
+    ):
+        friend_id = int(request.form["friend-id"])
+
+        db = app.config["DATABASE"]
+        user = User(db, session["id"])
+        user.friend_requests[friend_id].accept_friend_request()
+
+        return redirect(url_for("views.home"))
+    else:
+        msg = "Failed to accept friend request"
+
+    return render_template("home.html", msg=msg)
+
+
+@views.route("/decline_friend_request", methods=["POST"])
+def decline_friend_request():
+    # Display error message on website3
+    msg = ""
+
+    # Check if it's a POST request when clicking the like button
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "friend-id" in request.form
+        and "decline-friend-request" in request.form
+    ):
+        friend_id = int(request.form["friend-id"])
+
+        db = app.config["DATABASE"]
+        user = User(db, session["id"])
+        user.friend_requests[friend_id].decline_friend_request()
+
+        return redirect(url_for("views.home"))
+    else:
+        msg = "Failed to decline friend request"
+
+    return render_template("home.html", msg=msg)
+
+
 @views.route("/profile")
 def profile():
     if "loggedin" in session:
         db = app.config["DATABASE"]
         user = User(db, session["id"])
 
-        return render_template("profile.html", username=user.username, email=user.email)
+        return render_template("profile.html", user=user)
 
 
 @views.route("/create_post", methods=["POST"])
@@ -107,7 +163,7 @@ def create_post():
         post_description = request.form["create-post-textbox"]
         # Check if there's a post media (this is optional)
         # post_media = request.form["create-post-media"]
-        
+
         db = app.config["DATABASE"]
         user = User(db, session["id"])
         user.make_post(post_description)
@@ -179,7 +235,7 @@ def view_comments():
 def comment():
     # Display error message on website
     msg = ""
-    
+
     if (
         "loggedin" in session
         and request.method == "POST"
@@ -188,22 +244,22 @@ def comment():
     ):
         post_id = request.form["post-id"]
         comment_text = request.form["comment-textbox"]
-        
+
         db = app.config["DATABASE"]
         user = User(db, session["id"])
         user.make_comment(post_id, comment_text)
-        
+
         # Crashes when uncommented. Need to fix
-        #post = Post(db=db, post_id=post_id)
-        #return render_template("post.html", post=post)
-        
+        # post = Post(db=db, post_id=post_id)
+        # return render_template("post.html", post=post)
+
         return redirect(url_for("views.home"))
-    
+
     elif "loggedin" in session and request.method == "POST":
         msg = "Text is required to make a comment."
     else:
         msg = "Unable to make a comment..."
-    
+
     return render_template("post.html", msg=msg)
 
 
@@ -211,7 +267,7 @@ def comment():
 def reply():
     # Display error message on website
     msg = ""
-    
+
     if (
         "loggedin" in session
         and request.method == "POST"
@@ -222,20 +278,20 @@ def reply():
         post_id = request.form["post-id"]
         comment_id = request.form["comment-id"]
         reply_text = request.form["reply-textbox"]
-        
+
         db = app.config["DATABASE"]
         user = User(db, session["id"])
         user.reply_to_comment(post_id, comment_id, reply_text)
-        
+
         # Crashes when uncommented. Need to fix
-        #post = Post(db=db, post_id=post_id)
-        #return render_template("post.html", post=post)
-        
+        # post = Post(db=db, post_id=post_id)
+        # return render_template("post.html", post=post)
+
         return redirect(url_for("views.home"))
-    
+
     elif "loggedin" in session and request.method == "POST":
         msg = "Text is required to make a comment."
     else:
         msg = "Unable to make a comment..."
-    
+
     return render_template("post.html", msg=msg)

@@ -180,9 +180,6 @@ nav .create {
     background-color: #f0f0f0;
 }
 
-
-
-
 main {
     position: relative;
     top: 5.4rem;
@@ -325,7 +322,8 @@ main .container .left .profile {
 }
 
 .caption {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Style for individual action buttons */
@@ -368,10 +366,6 @@ main .container .left .profile {
     /* Adds space between the image and the buttons below */
     /*border-radius: var(--border-radius); Optional: rounds the corners of the image */
 }
-
-
-
-
 
 main .container .right {
     height: max-content;
@@ -421,4 +415,86 @@ main .container .right {
 .right .request .action {
     display: flex;
     gap: 1rem;
+}
+
+/* View comments page */
+.post-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment-box-wrapper {
+    margin-top: 1rem;
+}
+
+.comment-box-wrapper form {
+    display: flex;
+}
+
+.comment-box-wrapper form textarea {
+    background-color: rgb(242, 237, 237);
+    width: 26rem;
+    margin-right: 2rem;
+}
+
+.comment-box-wrapper form input {
+    width: 5rem;
+}
+
+.comment-area {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    row-gap: 2rem;
+    margin-top: 2rem;
+    margin-left: 14.5rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    width: 36.5rem;
+    margin-bottom: 3rem;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.comment-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment form textarea {
+    background-color: rgb(242, 237, 237);
+    width: 80%;
+}
+
+.comment form input {
+    width: 15%;
+}
+
+/* Friends Page */
+.friends-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 14rem;
+    margin-top: 5rem;
+}
+
+/* Profile Page */
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 14rem;
+    margin-top: 5rem;
 }

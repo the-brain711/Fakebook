@@ -96,7 +96,7 @@
         {% if friendrequests is none %}
         <h3>No Friend Requests...</h3>
         {% else %}
-        {% for request in friendrequests %}
+        {% for request_id, request in friendrequests.items() %}
         <div class="request">
             <div class="info">
                 <div>
@@ -105,12 +105,19 @@
             </div>
 
             <div class="action">
-                <form>
-
+                <!--Accept Friend Request-->
+                <form action="{{ url_for('views.accept_friend_request') }}" method="post">
+                    <input type="hidden" name="friend-id" id="friend-id" value="{{ request_id }}">
+                    <input class="btn btn-primary" type="submit" name="accept-friend-request" id="accept-friend-request"
+                        value="Accept">
                 </form>
 
-                <button class="btn btn-primary">Accept</button>
-                <button class="btn">Decline</button>
+                <!--Decline Friend Request-->
+                <form action="{{ url_for('views.decline_friend_request') }}" method="post">
+                    <input type="hidden" name="friend-id" id="friend-id" value="{{ request_id }}">
+                    <input class="btn" type="submit" name="decline-friend-request" id="decline-friend-request"
+                        value="Decline">
+                </form>
             </div>
         </div>
         {% endfor %}

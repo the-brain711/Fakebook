@@ -59,14 +59,16 @@ class User(Person):
         friend_requests = cursor.fetchall()
         
         if friend_requests:
-            items = list()
+            items = dict()
             for fr in friend_requests:
                 item = FriendRequest(
+                    db=self.db,
+                    friend_requester_id=self.user_id,
                     friend_accepter_id=fr["friend_accepter_id"],
                     friend_accepter_username=fr["username"],
                     friendship_date=fr["friendship_date"]
                 )
-                items.append(item)
+                items[fr["friend_accepter_id"]] = item
                 
             return items
         else:

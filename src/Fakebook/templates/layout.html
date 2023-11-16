@@ -3,7 +3,9 @@
 {% block nav %}
 <nav>
     <div class="container">
-        <h2 class="logo">Fakebook</h2>
+        <a href="{{ url_for('views.home') }}">
+            <h2 class="logo">Fakebook</h2>
+        </a>
 
         <div class="search-bar">
             <i class="uil uil-search"></i>
@@ -41,7 +43,7 @@
     </a>
 
     <div class="sidebar">
-        <a class="menu-item active" href="{{ url_for('views.home') }}">
+        <a class="menu-item" href="{{ url_for('views.home') }}">
             <span><i class="uil uil-home"></i></span>
             <h3>Home</h3>
         </a>
