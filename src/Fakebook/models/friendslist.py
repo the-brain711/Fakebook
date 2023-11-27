@@ -14,8 +14,11 @@ class FriendsList:
     def __get_friends(self):
         cursor = self.cursor
         cursor.execute(
-            "SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_accepter_id = users_tb.id WHERE friends_tb.friend_requester_id = %s AND friends_tb.friend_request_status = 'ACCEPTED'",
-            (self.user_id,),
+            "SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_accepter_id = users_tb.id WHERE friends_tb.friend_requester_id = %s AND friends_tb.friend_request_status = 'ACCEPTED' UNION SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_requester_id = users_tb.id WHERE friends_tb.friend_accepter_id = %s AND friends_tb.friend_request_status = 'ACCEPTED'",
+            (
+                self.user_id,
+                self.user_id,
+            ),
         )
         friends = cursor.fetchall()
 

@@ -19,26 +19,23 @@ def home():
     if request.method == "GET":
         db = app.config["DATABASE"]
         user = User(db, session["id"])
-        fullname = f"{user.name.first_name} {user.name.last_name}"
-        username = user.username
 
         user.timeline.view_timeline()
         posts = user.timeline.posts
         friend_requests = user.friend_requests
         
-
         if len(posts) != 0:
             return render_template(
                 "home.html",
-                fullname=fullname,
-                username=username,
+                username=session["username"],
+                fullname=session["fullname"],
                 posts=posts,
                 friendrequests=friend_requests,
             )
         else:
             msg = "No Posts..."
 
-    return render_template("home.html", fullname=fullname, username=username, msg=msg, friendrequests=friend_requests)
+    return render_template("home.html", fullname=session["fullname"], username=session["username"], msg=msg, friendrequests=friend_requests)
 
 
 @views.route("/friends")
@@ -53,13 +50,13 @@ def friends():
             friends = user.friends_list.friends
 
             if friends:
-                return render_template("friends.html", friends=friends)
+                return render_template("friends.html", friends=friends, username=session["username"], fullname=session["fullname"])
             else:
-                return render_template("friends.html", friends=None)
+                return render_template("friends.html", friends=None, username=session["username"], fullname=session["fullname"])
     else:
         msg = "Failed to load friends page"
 
-    return render_template("friends.html", msg=msg)
+    return render_template("friends.html", msg=msg, username=session["username"], fullname=session["fullname"])
 
 
 @views.route("/search_user", methods=["GET"])
@@ -173,7 +170,7 @@ def profile():
         db = app.config["DATABASE"]
         user = User(db, session["id"])
 
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, username=session["username"], fullname=session["fullname"])
 
 
 @views.route("/create_post", methods=["POST"])

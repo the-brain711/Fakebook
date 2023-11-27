@@ -42,6 +42,10 @@ def login():
         if user:
             session["loggedin"] = True
             session["id"] = user["id"]
+            session["username"] = username
+            
+            fullname = f"{user['first_name']} {user['last_name']}"
+            session["fullname"] = fullname
 
             return redirect(url_for("views.home"))
         else:
