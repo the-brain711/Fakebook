@@ -94,3 +94,7 @@ img {
 .text-muted {
     color: var(--color-gray);
 }
+
+a {
+    color: inherit;
+}
