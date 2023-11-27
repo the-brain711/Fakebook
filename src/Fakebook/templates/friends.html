@@ -2,6 +2,10 @@
 
 {% block title %}Fakebook - Friends{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
+{% endblock %}
+
 {% block content %}
 {% if msg %}
 <h4> {{ msg }}</h4>

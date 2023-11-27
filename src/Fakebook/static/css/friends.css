@@ -1,0 +1,10 @@
+@import "layout.css";
+
+/* Friends Page */
+.friends-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 14rem;
+    margin-top: 5rem;
+}
