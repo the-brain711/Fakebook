@@ -246,7 +246,7 @@ def view_comments():
         post.get_comments()
 
         if post:
-            return render_template("post.html", post=post)
+            return render_template("post.html", post=post, username=session["username"], fullname=session["fullname"])
         else:
             msg = "Failed to view comments."
     else:
