@@ -2,6 +2,10 @@
 
 {% block title %}Fakebook - Signup{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="signup">
     <h2>Signup for Fakebook</h2>
