@@ -53,7 +53,7 @@ class User(Person):
     def __get_friend_requests(self):
         cursor = self.cursor
         cursor.execute(
-            "SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_accepter_id = users_tb.id WHERE friends_tb.friend_requester_id = %s AND friends_tb.friend_request_status = 'PENDING' ORDER BY friendship_date DESC",
+            "SELECT users_tb.username, friends_tb.friend_requester_id, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_requester_id = users_tb.id WHERE friends_tb.friend_accepter_id = %s AND friends_tb.friend_request_status = 'PENDING' ORDER BY friendship_date DESC",
             (self.user_id,),
         )
         friend_requests = cursor.fetchall()
@@ -63,12 +63,12 @@ class User(Person):
             for fr in friend_requests:
                 item = FriendRequest(
                     db=self.db,
-                    friend_requester_id=self.user_id,
+                    friend_requester_id=fr["friend_requester_id"],
                     friend_accepter_id=fr["friend_accepter_id"],
                     friend_accepter_username=fr["username"],
                     friendship_date=fr["friendship_date"],
                 )
-                items[fr["friend_accepter_id"]] = item
+                items[fr["friend_requester_id"]] = item
 
             return items
         else:

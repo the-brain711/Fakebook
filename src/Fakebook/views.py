@@ -25,6 +25,7 @@ def home():
         user.timeline.view_timeline()
         posts = user.timeline.posts
         friend_requests = user.friend_requests
+        
 
         if len(posts) != 0:
             return render_template(
