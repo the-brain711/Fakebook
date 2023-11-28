@@ -27,15 +27,13 @@ def home():
         if len(posts) != 0:
             return render_template(
                 "home.html",
-                username=session["username"],
-                fullname=session["fullname"],
                 posts=posts,
                 friendrequests=friend_requests,
             )
         else:
             msg = "No Posts..."
 
-    return render_template("home.html", fullname=session["fullname"], username=session["username"], msg=msg, friendrequests=friend_requests)
+    return render_template("home.html", msg=msg, friendrequests=friend_requests)
 
 
 @views.route("/friends")
@@ -50,13 +48,13 @@ def friends():
             friends = user.friends_list.friends
 
             if friends:
-                return render_template("friends.html", friends=friends, username=session["username"], fullname=session["fullname"])
+                return render_template("friends.html", friends=friends)
             else:
-                return render_template("friends.html", friends=None, username=session["username"], fullname=session["fullname"])
+                return render_template("friends.html", friends=None)
     else:
         msg = "Failed to load friends page"
 
-    return render_template("friends.html", msg=msg, username=session["username"], fullname=session["fullname"])
+    return render_template("friends.html", msg=msg)
 
 
 @views.route("/search_user", methods=["GET"])
@@ -73,16 +71,22 @@ def search_user():
     ):
         username = request.args["searchbar"]
         db = app.config["DATABASE"]
-        user = User(db, session["id"])
-        searched_user = user.search_for_user(username)
+        cursor = db.connection.cursor()
         
-        if searched_user:
-            render_template("profile.html", searcheduser=searched_user)
+        # Get friend's user id
+        cursor.execute(
+            "SELECT id FROM users_tb WHERE username = %s",
+            (username,),
+        )
+        user_id = cursor.fetchone()
+        
+        if user_id:
+            return render_template("search.html", searchedid=user_id[0], searcheduser=username)
         else:
             msg = "Failed to find user " + username
     else:
         msg = "User search failed..."
-    return render_template("profile.html", msg=msg)
+    return render_template("search.html", msg=msg)
 
 
 @views.route("/send_friend_request", methods=["POST"])
@@ -94,24 +98,26 @@ def send_friend_request():
     if (
         "loggedin" in session
         and request.method == "POST"
-        and "searchbox-friends" in request.form
+        and "friend-id" in request.form
+        and "friend-username" in request.form
     ):
-        friend_username = request.form["searchbox-friends"]
+        friend_id = request.form["friend-id"]
+        friend_username = request.form["friend-username"]
         db = app.config["DATABASE"]
 
         user = User(db, session["id"])
-        status = user.send_friend_request(friend_username)
+        status = user.send_friend_request(friend_id)
 
         if status == FriendRequestErrors.INVALID_USER:
             msg = "Could not find user: " + friend_username
         elif status == FriendRequestErrors.FRIEND_REQUEST_ALREADY_EXISTS:
             msg = "Friend request for " + friend_username + " already exists."
         else:
-            return redirect(url_for("views.friends"))
+            return redirect(url_for("views.home"))
     else:
         msg = "Unable to send friend request..."
 
-    return render_template("friends.html", msg=msg)
+    return render_template("search.html", msg=msg)
 
 
 @views.route("/accept_friend_request", methods=["POST"])
@@ -170,7 +176,7 @@ def profile():
         db = app.config["DATABASE"]
         user = User(db, session["id"])
 
-        return render_template("profile.html", user=user, username=session["username"], fullname=session["fullname"])
+        return render_template("profile.html", user=user)
 
 
 @views.route("/create_post", methods=["POST"])
@@ -246,7 +252,7 @@ def view_comments():
         post.get_comments()
 
         if post:
-            return render_template("post.html", post=post, username=session["username"], fullname=session["fullname"])
+            return render_template("post.html", post=post)
         else:
             msg = "Failed to view comments."
     else:

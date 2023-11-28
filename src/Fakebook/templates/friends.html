@@ -22,15 +22,6 @@
 </div> -->
 
 <div class="friends-page">
-    <div class="friends-search">
-        <h3>Search for Friends</h3>
-        <form action="{{ url_for('views.send_friend_request') }}" method="post">
-            <input type="search" name="searchbox-friends" id="searchbox-friends" autocomplete="no"
-                placeholder="Enter friend's username" required>
-            <input type="submit" name="search-friends-submit" id="search-friends-submit" value="Send Friend Request">
-        </form>
-    </div>
-
     {% if friends %}
     <div class="friends-page">
         <h3>Friends List</h3>

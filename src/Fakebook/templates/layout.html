@@ -9,7 +9,7 @@
 
         <div class="search-bar">
             <i class="uil uil-search"></i>
-            <form action="" method="get">
+            <form action="{{ url_for('views.search_user') }}" method="get">
                 <input type="search" name="searchbar" id="searchbar" placeholder="Search for users" maxlength="50"
                     required>
                 <input type="submit" name="searchbar-submit" id="searchbar-submit" value="">
@@ -39,9 +39,9 @@
     <a class="profile">
         <!---<div class="profile-photo">-->
         <div class="handle">
-            <h4>{{ fullname }}</h4>
+            <h4>{{ session["fullname"] }}</h4>
             <p class="text-muted">
-                @{{ username }}
+                @{{ session["username"] }}
             </p>
         </div>
     </a>
