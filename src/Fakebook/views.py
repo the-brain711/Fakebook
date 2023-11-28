@@ -73,15 +73,16 @@ def search_user():
         db = app.config["DATABASE"]
         cursor = db.connection.cursor()
         
-        # Get friend's user id
+        # Get user
         cursor.execute(
-            "SELECT id FROM users_tb WHERE username = %s",
+            "SELECT id, first_name, last_name FROM users_tb WHERE username = %s",
             (username,),
         )
-        user_id = cursor.fetchone()
+        user = cursor.fetchone()
         
-        if user_id:
-            return render_template("search.html", searchedid=user_id[0], searcheduser=username)
+        if user:
+            fullname = f"{user[1]} {user[2]}"
+            return render_template("search.html", searchedid=user[0], searchedfullname=fullname, searcheduser=username)
         else:
             msg = "Failed to find user " + username
     else:
@@ -172,7 +173,19 @@ def decline_friend_request():
 
 @views.route("/profile")
 def profile():
-    if "loggedin" in session:
+    print(request.args)
+    if (
+        "loggedin" in session
+        and request.method == "GET"
+        and "user-id" in request.args
+    ):
+        user_id = request.args["user-id"]
+        
+        db = app.config["DATABASE"]
+        user = User(db, user_id)
+
+        return render_template("profile.html", user=user)
+    else:
         db = app.config["DATABASE"]
         user = User(db, session["id"])
 

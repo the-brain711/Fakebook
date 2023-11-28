@@ -15,9 +15,12 @@
 
     {% if searchedid %}
     <div class="search-item">
-        <h3>{{ searcheduser }}</h3>
+        <section class="search-item-header">
+            <h3>{{ searchedfullname }}</h3>
+            <p class="text-muted">@{{ searcheduser }}</p>
+        </section>
 
-        <section>
+        <section class="search-item-options">
             <form action="{{ url_for('views.send_friend_request') }}" method="post">
                 <input type="hidden" name="friend-id" id="friend-id" value="{{ searchedid }}">
                 <input type="hidden" name="friend-username" id="friend-username" value="{{ searcheduser }}">
@@ -26,7 +29,7 @@
             </form>
 
             <form action="{{ url_for('views.profile') }}" method="get">
-                <input type="hidden" name="friend-id" id="friend-id" value="{{ searchedid }}">
+                <input type="hidden" name="user-id" id="user-id" value="{{ searchedid }}">
                 <input type="submit" name="view-profile" id="view-profile" value="View Profile">
             </form>
         </section>

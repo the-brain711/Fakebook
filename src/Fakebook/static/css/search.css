@@ -18,13 +18,13 @@
     row-gap: 1rem;
 }
 
-.search-item section {
+.search-item-options {
     display: flex;
     flex-direction: row;
     column-gap: 2rem;
 }
 
-.search-item section form input {
+.search-item-options form input {
     border-radius: var(--border-radius);
     padding: 0.4rem;
 }
