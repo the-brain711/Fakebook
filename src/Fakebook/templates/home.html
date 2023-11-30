@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="middle">
+    <!---->
+    <form class="create-post" action="{{ url_for('views.create_post') }}" method="post" autocomplete="off">
+        <input name="create-post-textbox" id="create-post-textbox" type="text" placeholder="What's on your mind?"
+            maxlength="250" required>
+        <!--<input type="file" name="create-post-media" id="create-post-media" accept="image/png, image/jpeg" /> -->
+        <input type="submit" name="create-post-submit" id="create-post-submit" value="Post" class="btn btn-primary">
+    </form>
+
+    <!------------FEED---------------------->
+    <div class="feeds">
+        {% if msg %}
+        <h3>{{ msg }}</h3>
+        {% else %}
+        {% for post_id, post in posts.items() %}
+        <div class="feed">
+            <div class="head">
+                <!------Username and Date------->
+                <div class="user">
+                    <div class="info">
+                        <h3>{{ post['creator_name'] }}</h3>
+                        <small>{{ post['creation_date'] }}</small>
+                    </div>
+                </div>
+
+                <!--Post Options-->
+                <span class="edit">
+                    <i class="uil uil-ellipsis-h"></i>
+                </span>
+            </div>
+
+            <div class="body">
+                <!-- <div class="post-image">
+                    <img src="images/terrell.jpg" alt="Terrell Owens">  Image added here 
+                </div> -->
+
+                <div class="likes-counter">
+                    <span><i class="uil uil-thumbs-up"></i></span>
+                    <label>{{ post['likes'] }}</label>
+                    <!--<span><i class="uil uil-comment"></i></span> -->
+                    <!--<span><i class="uil uil-share"></i></span> -->
+                </div>
+
+                <div class="caption">
+                    <p>{{ post['description'] }}</p>
+                </div>
+
+                <div class="action-buttons">
+                    <div class="interaction-buttons">
+                        <!--Like Post-->
+                        <form action="{{ url_for('views.like_post') }}" method="post">
+                            <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                            <input class="like-btn" type="submit" name="like-post-submit" id="like-post-submit"
+                                value="Like">
+                        </form>
+                    </div>
+
+                    <!--<div class="bookmark">
+                        <span><i class="uil uil-bookmark"></i></span>
+                    </div> -->
+                </div>
+                <form action="{{ url_for('views.view_comments') }}" method="get">
+                    <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                    <input class="comments text-muted" type="submit" name="comment-post-submit" id="comment-post-submit"
+                        value="View Comments">
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+<div class="right">
+    <!----->
+    <!-- <div class="messages"> -->
+    <!-- <div class="heading"> -->
+    <!-- <h4>Messages</h4><i class="uil uil-envelopes"></i> -->
+    <!-- </div> -->
+
+    <!----Search again -->
+    <!-- <div class="search-bar"> -->
+    <!-- <i class="uil uil-search"></i> -->
+    <!-- <input type="search" placeholder = "Filter through messages" id="message-search"> -->
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- Requests section -->
+    <div class="friend-requests">
+        <h4>Friend Requests</h4>
+
+        {% if friendrequests is none %}
+        <h3>No Friend Requests...</h3>
+        {% else %}
+        {% for request_id, request in friendrequests.items() %}
+        <div class="request">
+            <div class="info">
+                <div>
+                    <h5>{{ request['friend_accepter_username'] }}</h5>
+                </div>
+            </div>
+
+            <div class="action">
+                <!--Accept Friend Request-->
+                <form action="{{ url_for('views.accept_friend_request') }}" method="post">
+                    <input type="hidden" name="friend-id" id="friend-id" value="{{ request_id }}">
+                    <input class="btn btn-primary" type="submit" name="accept-friend-request" id="accept-friend-request"
+                        value="Accept">
+                </form>
+
+                <!--Decline Friend Request-->
+                <form action="{{ url_for('views.decline_friend_request') }}" method="post">
+                    <input type="hidden" name="friend-id" id="friend-id" value="{{ request_id }}">
+                    <input class="btn" type="submit" name="decline-friend-request" id="decline-friend-request"
+                        value="Decline">
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

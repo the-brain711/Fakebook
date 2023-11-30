@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --color-white: hsl(252, 30%, 100%);
+    --color-light: hsl(252, 30%, 95%);
+    --color-gray: hsl(252, 15%, 65%);
+    --color-primary: hsl(252, 75%, 60%);
+    --color-secondary: hsl(252, 100%, 90%);
+    --color-success: hsl(120, 95%, 65%);
+    --color-danger: hsl(0, 95%, 65%);
+    --color-dark: hsl(252, 30%, 17%);
+    --color-black: hsl(252, 30%, 10%);
+
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+    --btn-padding: 0.6 rem 2 rem;
+    --search-padding: 0.6rem 1 rem;
+    --card-padding: 1rem;
+
+    --sticky-top-left: 5.4rem;
+    --sticky-top-right: -18rem;
+
+}
+
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-light);
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+img {
+    display: block;
+    width: 100;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    /* Increase padding for a larger button appearance */
+    margin: 5px;
+    /* Add some space around buttons */
+    font-weight: 500;
+    border-radius: 20px;
+    /* Adjust for more rounded corners if you like */
+    cursor: pointer;
+    transition: all 300ms ease;
+    /* Correct the syntax for the transition */
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    /* Add border to define the edges */
+    background-color: var(--color-primary);
+    /* Ensure this variable is defined in your CSS */
+    color: white;
+    /* Text color for the buttons */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow for depth */
+}
+
+.btn:hover {
+    opacity: 0.8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* Slightly deeper shadow on hover */
+}
+
+/* Add specific styles for .btn-primary if you want it to stand out */
+.btn-primary {
+    background-color: var(--color-danger);
+    /* This should be a defined variable */
+    border-color: var(--color-danger-dark);
+    /* Darker border color for primary button */
+}
+
+.text-bold {
+    font-weight: 500;
+}
+
+.text-muted {
+    color: var(--color-gray);
+}
+
+a {
+    color: inherit;
+}

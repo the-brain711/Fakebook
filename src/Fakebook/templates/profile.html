@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}Fakebook - Profile{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+    <div class="profile-header">
+        <section>
+            <h3>
+                {{ user['name']['first_name'] }} {{ user['name']['last_name'] }}
+            </h3>
+            <p class="text-muted">@{{ user['username'] }}</p>
+            <label>
+                Friends: {{ user['friends_list']['total_friends_count'] }}
+            </label>
+        </section>
+    </div>
+
+    <div class="profile-bio">
+    </div>
+</div>
+{% endblock %}

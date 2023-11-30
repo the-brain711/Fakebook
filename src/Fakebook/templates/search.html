@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}Fakebook - Search{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="search-wrapper">
+    {% if msg %}
+    <h3>{{ msg }}</h3>
+    {% endif %}
+
+    {% if searchedid %}
+    <div class="search-item">
+        <section class="search-item-header">
+            <h3>{{ searchedfullname }}</h3>
+            <p class="text-muted">@{{ searcheduser }}</p>
+        </section>
+
+        <section class="search-item-options">
+            <form action="{{ url_for('views.send_friend_request') }}" method="post">
+                <input type="hidden" name="friend-id" id="friend-id" value="{{ searchedid }}">
+                <input type="hidden" name="friend-username" id="friend-username" value="{{ searcheduser }}">
+                <input type="submit" name="search-friends-submit" id="search-friends-submit"
+                    value="Send Friend Request">
+            </form>
+
+            <form action="{{ url_for('views.profile') }}" method="get">
+                <input type="hidden" name="user-id" id="user-id" value="{{ searchedid }}">
+                <input type="submit" name="view-profile" id="view-profile" value="View Profile">
+            </form>
+        </section>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

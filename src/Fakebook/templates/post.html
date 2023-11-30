@@ -1,0 +1,104 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+{% endblock %}
+
+{% block title %}Fakebook - Post{% endblock %}
+
+{% block content %}
+{% if msg %}
+<h3>{{ msg }}</h3>
+{% else %}
+<div class="post-page">
+    <div class="feed"
+        style="margin-left: 15rem; margin-top: 3rem; background-color: white; display: flex; flex-direction: column; align-items: start; justify-content: space-evenly; border-radius: 2rem; padding: 1rem;">
+        <div class="head" style="display: flex; flex-direction: row;">
+            <!------Username and Date------->
+            <div class="user">
+                <div class="info">
+                    <h3>{{ post['creator_name'] }}</h3>
+                    <small>{{ post['creation_date'] }}</small>
+                </div>
+            </div>
+
+            <!--Post Options-->
+            <span class="edit" style="margin-left: 25rem;">
+                <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+
+        <div class="body">
+            <!-- <div class="post-image">
+            <img src="images/terrell.jpg" alt="Terrell Owens">  Image added here 
+        </div> -->
+
+            <div class="likes-counter">
+                <span><i class="uil uil-thumbs-up"></i></span>
+                <label>{{ post['likes'] }}</label>
+                <!--<span><i class="uil uil-comment"></i></span> -->
+                <!--<span><i class="uil uil-share"></i></span> -->
+            </div>
+
+            <div class="caption">
+                <p>{{ post['description'] }}</p>
+            </div>
+
+            <div class="action-buttons">
+                <div class="interaction-buttons">
+                    <!--Like Post-->
+                    <form action="{{ url_for('views.like_post') }}" method="post">
+                        <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                        <input class="like-btn" type="submit" name="like-post-submit" id="like-post-submit"
+                            value="Like">
+                    </form>
+                </div>
+
+                <!--<div class="bookmark">
+                <span><i class="uil uil-bookmark"></i></span>
+            </div> -->
+            </div>
+
+            <div class="comment-box-wrapper">
+                <form action="{{ url_for('views.comment') }}" method="post" autocomplete="on">
+                    <textarea rows="5" name="comment-textbox" id="comment-textbox"
+                        placeholder="What's on your mind {{ username }}?" maxlength="500" required></textarea>
+                    <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                    <input type="submit" name="comment-submit" id="comment-submit" value="Comment" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-area">
+        <h4>Comments</h4>
+        {% if post['comments'] %}
+        {% for comment_id, comment in post['comments'].items() %}
+        {% if comment['comment_replied_to'] == None %}
+        <div class="comment">
+            <div class="comment-details">
+                <h4>{{ comment['commenter_name'] }}</h4>
+                <label>{{ comment['creation_date'] }}</label>
+            </div>
+            <p>{{ comment['text'] }}</p>
+
+            <hr class="solid">
+
+            <form action="{{ url_for('views.reply') }}" method="post">
+                <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
+                <input type="hidden" name="comment-id" id="post-id" value="{{ comment_id }}">
+                <textarea rows="2" name="reply-textbox" id="reply-textbox" placeholder="Reply Here" maxlength="250"
+                    required></textarea>
+                <input type="submit" name="reply-submit" id="reply-submit" value="Reply" />
+            </form>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <h4>No Comments...</h4>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

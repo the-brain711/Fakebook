@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Fakebook - Signup{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="signup">
+    <h2>Signup for Fakebook</h2>
+
+    <form action="{{ url_for('auth.signup') }}" method="post" autocomplete="off">
+        <input type="text" name="firstname" id="firstname" placeholder="First Name" maxlength="25" required>
+        <input type="text" name="lastname" id="lastname" placeholder="Last Name" maxlength="25" required>
+        <input type="text" name="username" id="username" placeholder="Username" maxlength="25" required>
+        <input type="email" name="email" id="email" placeholder="Email" maxlength="100" required>
+        <input type="password" name="password" id="password" placeholder="Password" maxlength="25" required>
+        <input type="submit" value="Signup">
+        <div class="login-msg">{{ msg }}</div>
+    </form>
+</div>
+{% endblock %}

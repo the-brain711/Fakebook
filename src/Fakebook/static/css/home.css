@@ -1,0 +1,166 @@
+@import "layout.css";
+
+/* Create Post in middle section 59:30 */
+.middle .create-post {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    background: var(--color-white);
+    padding: 0.4rem var(--card-padding);
+    border-radius: var(--border-radius);
+}
+
+.middle .create-post input[type="text"] {
+    justify-self: start;
+    width: 100%;
+    padding-left: 1rem;
+    background: transparent;
+    color: var(--color-dark);
+    margin-right: 1rem;
+}
+
+/*------Feed Styling------------*/
+/* Adjust the width of the middle section where the feeds are displayed */
+.middle {
+    width: 80%;
+    /* Example width - adjust as necessary */
+    margin: auto;
+    /* Centers the middle section */
+    margin-left: 15%;
+}
+
+/* Style for the feed head, including the username and ellipsis */
+.middle .feed .head {
+    display: flex;
+    justify-content: space-between;
+    /* Aligns items to opposite ends */
+    align-items: center;
+    /* Aligns items vertically */
+    margin-bottom: 0.6rem;
+}
+
+/* Style for the feed container */
+.middle .feeds .feed {
+    background: var(--color-white);
+    /* Example gray background, can be changed */
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+/* Style for post info */
+.likes-counter {
+    font-size: medium;
+}
+
+/* Style for the interaction buttons and bookmark/save icon */
+.middle .feed .action-buttons,
+.middle .feed .bookmark {
+    display: flex;
+    justify-content: space-between;
+    /* Aligns action buttons and bookmark icon on opposite ends */
+    align-items: center;
+    font-size: 1.4rem;
+    margin: 0.6rem 0;
+}
+
+.caption {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Style for individual action buttons */
+.middle .feed .interaction-buttons span {
+    margin-right: 0.4rem;
+    /* Adds space between buttons */
+}
+
+.middle .feed .bookmark {
+    margin-left: auto;
+    /* Moves the bookmark icon to the right */
+}
+
+/* Style for the comments link */
+.middle .feed .comments {
+    color: #808080;
+    /* Example gray color, can be changed */
+    cursor: pointer;
+    padding-top: 0.4rem;
+    display: block;
+    /* Ensures 'View comments' starts on a new line */
+    margin-top: 0.6rem;
+    /* Adds space above the 'View comments' link */
+}
+
+
+/* ----Feed picture for now lol---------*/
+.post-image img {
+    max-width: 500px;
+    /* Maximum image width */
+    width: 50%;
+    /* Responsive: the image will scale down if the container is smaller than 500px */
+    height: auto;
+    /* Maintain aspect ratio */
+    display: block;
+    /* Remove any extra space below the image */
+    margin: 0 auto;
+    /* Center the image within the container */
+    margin-bottom: 0.6rem;
+    /* Adds space between the image and the buttons below */
+    /*border-radius: var(--border-radius); Optional: rounds the corners of the image */
+}
+
+/* Right Sidebar */
+main .container .right {
+    height: max-content;
+    position: sticky;
+    top: var(--sticky-top-right);
+    bottom: 0;
+}
+
+.right .messages {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+}
+
+.right .messages .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.right .messages .i {
+    font-size: 1.4rem;
+}
+
+.right .messages .search-bar {
+    display: flex;
+    /* background: purple; */
+    margin-bottom: 1rem;
+}
+
+.right .friend-requests {
+    margin-top: 1rem;
+}
+
+.right .friend-requests h4 {
+    color: var(--color-gray);
+    margin: 1rem 0;
+}
+
+.right .request .info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.right .request .action {
+    display: flex;
+    gap: 1rem;
+}
