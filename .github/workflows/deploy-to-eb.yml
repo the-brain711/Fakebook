@@ -2,7 +2,7 @@ name: deploy-to-eb
 
 on:
   push:
-    branches: [ DEV ]
+    branches: [ main ]
 
 jobs:
   deploy:
