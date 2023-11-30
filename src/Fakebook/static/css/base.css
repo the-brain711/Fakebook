@@ -98,3 +98,24 @@ img {
 a {
     color: inherit;
 }
+
+.box {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.box-options {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+}
+
+.box-options form input {
+    border-radius: var(--border-radius);
+    padding: 0.4rem;
+}

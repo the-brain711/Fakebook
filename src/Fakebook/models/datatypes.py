@@ -18,7 +18,8 @@ class Address:
 
 
 class Friend:
-    def __init__(self, friend_id: int=0, friend_name: str="", friendship_date: datetime=None):
+    def __init__(self, friend_id: int=0, friend_fullname: str="", friend_username: str="", friendship_date: datetime=None):
         self.friend_id = friend_id
-        self.friend_name = friend_name
+        self.friend_fullname = friend_fullname
+        self.friend_username = friend_username
         self.friendship_date = friendship_date

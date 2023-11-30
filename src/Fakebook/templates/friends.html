@@ -12,22 +12,27 @@
 {% endif %}
 
 <div class="friends-page">
+    <h2>Friends List</h2>
     {% if friends %}
-    <div class="friends-page">
-        <h3>Friends List</h3>
-        <div class="friends-list-container">
-            {% for friend_id, friend in friends.items() %}
-            <div class="box">
-                <h4>{{ friend['friend_name'] }}</h4>
-            </div>
-            {% endfor %}
+    <div class="friends-list-container">
+        {% for friend_id, friend in friends.items() %}
+        <div class="box">
+            <section class="box-header">
+                <h3>{{ friend["friend_fullname"] }}</h3>
+                <p class="text-muted">@{{ friend["friend_username"] }}</p>
+            </section>
+
+            <section class="box-options">
+                <form action="{{ url_for('views.profile') }}" method="get">
+                    <input type="hidden" name="user-id" id="user-id" value="{{ friend['friend_id'] }}">
+                    <input type="submit" name="view-profile" id="view-profile" value="View Profile">
+                </form>
+            </section>
         </div>
+        {% endfor %}
     </div>
     {% else %}
-    <div>
-        <h3>Friends List</h3>
-        <label>No Friends...</label>
-    </div>
+    <label>No Friends...</label>
     {% endif %}
 </div>
 

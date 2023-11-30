@@ -47,6 +47,7 @@ def friends():
             user = User(db, session["id"])
             friends = user.friends_list.friends
             friend_requests = user.friend_requests
+            print(len(friends))
 
             if friends:
                 return render_template("friends.html", friends=friends, friendrequests=friend_requests)

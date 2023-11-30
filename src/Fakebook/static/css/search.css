@@ -7,24 +7,3 @@
     margin-top: 3rem;
     margin-left: 15rem;
 }
-
-.search-item {
-    background-color: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-}
-
-.search-item-options {
-    display: flex;
-    flex-direction: row;
-    column-gap: 2rem;
-}
-
-.search-item-options form input {
-    border-radius: var(--border-radius);
-    padding: 0.4rem;
-}

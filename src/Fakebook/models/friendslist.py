@@ -14,7 +14,7 @@ class FriendsList:
     def __get_friends(self):
         cursor = self.cursor
         cursor.execute(
-            "SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_accepter_id = users_tb.id WHERE friends_tb.friend_requester_id = %s AND friends_tb.friend_request_status = 'ACCEPTED' UNION SELECT users_tb.username, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_requester_id = users_tb.id WHERE friends_tb.friend_accepter_id = %s AND friends_tb.friend_request_status = 'ACCEPTED'",
+            "SELECT users_tb.username, users_tb.first_name, users_tb.last_name, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_accepter_id = users_tb.id WHERE friends_tb.friend_requester_id = %s AND friends_tb.friend_request_status = 'ACCEPTED' UNION SELECT users_tb.username, users_tb.first_name, users_tb.last_name, friends_tb.friend_accepter_id, friends_tb.friendship_date FROM friends_tb INNER JOIN users_tb ON friends_tb.friend_requester_id = users_tb.id WHERE friends_tb.friend_accepter_id = %s AND friends_tb.friend_request_status = 'ACCEPTED'",
             (
                 self.user_id,
                 self.user_id,
@@ -29,7 +29,8 @@ class FriendsList:
             for friend in friends:
                 item = Friend(
                     friend_id=friend["friend_accepter_id"],
-                    friend_name=friend["username"],
+                    friend_fullname=f"{friend['first_name']} {friend['last_name']}",
+                    friend_username=friend["username"],
                     friendship_date=friend["friendship_date"],
                 )
                 friends_dict[friend["friend_accepter_id"]] = item
@@ -37,9 +38,3 @@ class FriendsList:
             return friends_dict
         else:
             return None
-
-    def add_friend():
-        pass
-
-    def remove_friend():
-        pass

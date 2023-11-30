@@ -4,7 +4,14 @@
 .friends-page {
     display: flex;
     flex-direction: column;
-    row-gap: 2.5rem;
     margin-left: 14rem;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
+    row-gap: 2rem;
+}
+
+.friends-list-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 2rem;
+    column-gap: 2rem;
 }
