@@ -6,22 +6,80 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 {% endblock %}
 
-{% block content %}
+{% block left_sidebar %}
+{% endblock %}
 
-<div class="profile-page">
-    <div class="profile-header">
+{% block content %}
+<div class="profile-container">
+    <!--<img src="images/cover.png" class="cover-img"-->
+    <div class="profile-header box grid-column-span-2">
         <section>
-            <h3>
-                {{ user['name']['first_name'] }} {{ user['name']['last_name'] }}
-            </h3>
-            <p class="text-muted">@{{ user['username'] }}</p>
-            <label>
-                Friends: {{ user['friends_list']['total_friends_count'] }}
-            </label>
+            <h3>{{ fullname }}</h3>
+            <p class="text-muted">@{{ username }}</p>
+            <p>Friends: {{ user['friends_list']['total_friends_count'] }}</p>
+            <!---
+            <img src="images/member-1.png">
+            <img src="images/member-2.png">
+            <img src="images/member-3.png">
+            <img src="images/member-4.png">-->
+        </section>
+
+        <section>
+            <button type="button"><img src="images/add-friends.png"> Friend</button>
+            <!--<button type="button"><img src="images/message.png"> Message</button>-->
+            <!---
+            <br>
+            <a href=""><img src="images/more.png"></a>-->
         </section>
     </div>
 
-    <div class="profile-bio">
+    <div class="box">
+        <h3>Bio</h3>
+        <p class="intro-text">{{ user["bio"] }}</p>
+
+        <!---
+        <hr>
+        <ul>
+            <li><img src="images/profile-job.png"> Director at Tech for Mechs</li>
+            <li><img src="images/profile-study.png"> Studied at Mississippi State University</li>
+            <li><img src="images/profile-study.png"> Went to Clinton</li>
+            <li><img src="images/profile-home.png"> Lives in Orlando, Florida</li>
+            <li><img src="images/profile-location.png"> From Jackson, Mississippi</li>
+        </ul>-->
+    </div>
+
+    <div class="box">
+        <div class="title-box">
+            <h3>Friends</h3>
+            <a href="">All Friends</a>
+        </div>
+        <p>Friends: {{ user['friends_list']['total_friends_count'] }}</p>
+    </div>
+
+    <!--
+        <div class="profile-intro">
+            <div class="title-box">
+                <h3>Photos</h3>
+                <a href="">All Photos</a>
+            </div>
+
+            <div class="photo-box">
+                <div><img src="images/photo1.png"></div>
+                <div><img src="images/photo2.png"></div>
+                <div><img src="images/photo3.png"></div>
+                <div><img src="images/photo4.png"></div>
+                <div><img src="images/photo5.png"></div>
+                <div><img src="images/photo6.png"></div>
+            </div>
+        </div>-->
+
+    <div class="box">
+        <section class="profile-post-header">
+            <h3>{{ fullname }}</h3>
+            <p class="text-muted">@{{ username }}</p>
+        </section>
+
+        <textarea rows="3" placeholder="What's on your mind?"></textarea>
     </div>
 </div>
 {% endblock %}

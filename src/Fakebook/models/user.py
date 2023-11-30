@@ -17,6 +17,7 @@ class User(Person):
         self.username = ""
         self.creation_date: datetime = None
         self.profile_picture_url = ""
+        self.bio = ""
         self.__get_user_data()
 
         self.timeline = Timeline(db, user_id)
@@ -36,6 +37,7 @@ class User(Person):
             self.email = user["email"]
             self.phone = user["phone"]
             self.profile_picture_url = user["profile_picture_url"]
+            self.bio = user["bio"]
             self.gender = user["gender"]
             self.name = Name(user["first_name"], user["middle_name"], user["last_name"])
             self.address = Address(

@@ -106,16 +106,20 @@ def signup():
             hashed_password = password + app.secret_key
             hashed_password = hashlib.sha1(hashed_password.encode())
             password = hashed_password.hexdigest()
+            
+            # Creation date
+            creation_date = datetime.now()
 
             # Create new account and store in database
             cursor.execute(
-                "INSERT INTO users_tb (first_name, last_name, username, password, email) VALUES(%s, %s, %s, %s, %s)",
+                "INSERT INTO users_tb (first_name, last_name, username, password, email, creation_date) VALUES(%s, %s, %s, %s, %s, %s)",
                 (
                     firstname,
                     lastname,
                     username,
                     password,
                     email,
+                    creation_date,
                 ),
             )
             db.connection.commit()

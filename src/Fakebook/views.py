@@ -175,7 +175,6 @@ def decline_friend_request():
 
 @views.route("/profile")
 def profile():
-    print(request.args)
     if (
         "loggedin" in session
         and request.method == "GET"
@@ -185,13 +184,15 @@ def profile():
         
         db = app.config["DATABASE"]
         user = User(db, user_id)
+        fullname = f"{user.name.first_name} {user.name.last_name}"
+        username = user.username
 
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, fullname=fullname, username=username)
     else:
         db = app.config["DATABASE"]
         user = User(db, session["id"])
 
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, fullname=session["fullname"], username=session["username"])
 
 
 @views.route("/create_post", methods=["POST"])
