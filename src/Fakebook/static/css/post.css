@@ -1,0 +1,65 @@
+@import "layout.css";
+
+/* View comments page */
+.post-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment-box-wrapper {
+    margin-top: 1rem;
+}
+
+.comment-box-wrapper form {
+    display: flex;
+}
+
+.comment-box-wrapper form textarea {
+    background-color: rgb(242, 237, 237);
+    width: 26rem;
+    margin-right: 2rem;
+}
+
+.comment-box-wrapper form input {
+    width: 5rem;
+}
+
+.comment-area {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    row-gap: 2rem;
+    margin-top: 2rem;
+    margin-left: 14.5rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    width: 36.5rem;
+    margin-bottom: 3rem;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.comment-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment form textarea {
+    background-color: rgb(242, 237, 237);
+    width: 80%;
+}
+
+.comment form input {
+    width: 15%;
+}

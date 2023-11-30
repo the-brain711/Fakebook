@@ -1,38 +1,92 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% block nav %}
+<nav>
+    <div class="container">
+        <a href="{{ url_for('views.home') }}">
+            <h2 class="logo">Fakebook</h2>
+        </a>
 
-<body class="loggedin">
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-    <nav>
-        <h1>Fakebook</h1>
-        <div class="nav-links">
-            <a href="{{ url_for('views.home') }}"><i class="fas fa-home"></i>Home</a>
-            <a href="{{ url_for('views.profile') }}"><i class="fas fa-user-circle"></i>Profile</a>
-            <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        <div class="search-bar">
+            <i class="uil uil-search"></i>
+            <form action="{{ url_for('views.search_user') }}" method="get">
+                <input type="search" name="searchbar" id="searchbar" placeholder="Search for users" maxlength="50"
+                    required>
+                <input type="submit" name="searchbar-submit" id="searchbar-submit" value="">
+            </form>
         </div>
-    </nav>
 
-    <div class="content">
-        {% block content %}{% endblock %}
+        <div class="user-profile">
+            <img src="{{ url_for('static', filename='images/bulldog.png') }}" alt="Profile" id="profileImg"
+                class="profile-img">
+
+            <div id="profileOptions" class="profile-options">
+                <a href="{{ url_for('views.profile') }}">View Profile</a>
+                <!--<a href="path-to-notifications.html">Notifications</a> -->
+                <!--<a href="path-to-account-details.html">Account Details</a> -->
+                <!--<a href="path-to-bookmarks.html">Bookmarks</a> -->
+                <!--<a href="{{ url_for('views.friends') }}">Friends</a> -->
+                <!--<a href="path-to-display-settings.html">Display</a> -->
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </div>
+        </div>
     </div>
+</nav>
+{% endblock %}
 
-    <script src="" async defer></script>
-</body>
+{% block left_sidebar %}
+<div class="left">
+    <a class="profile">
+        <!---<div class="profile-photo">-->
+        <div class="handle">
+            <h4>{{ session["fullname"] }}</h4>
+            <p class="text-muted">
+                @{{ session["username"] }}
+            </p>
+        </div>
+    </a>
 
-</html>
+    <div class="sidebar">
+        <a class="menu-item" href="{{ url_for('views.home') }}">
+            <span><i class="uil uil-home"></i></span>
+            <h3>Home</h3>
+        </a>
+
+        <a class="menu-item" href="{{ url_for('views.friends') }}">
+            <span><i class="uil uil-users-alt"></i></span>
+            <h3>Friends</h3>
+        </a>
+
+        <a class="menu-item" href="{{ url_for('views.profile') }}">
+            <span><i class="uil uil-user-circle"></i></span>
+            <h3>Profile</h3>
+        </a>
+        <!--
+        <a class="menu-item">
+            <span><i class="uil uil-bell"></i></span><h3>Notifications</h3>
+        </a>
+        <a class="menu-item">
+            <span><i class="uil uil-envelopes"></i></span><h3>Messages</h3>
+        </a>
+        <a class="menu-item">
+            <span><i class="uil uil-bookmark"></i></span><h3>Saved</h3>
+        </a>
+        <a class="menu-item">
+            <span><i class="uil uil-palette"></i></span><h3>Theme</h3>
+        </a>
+        Other shit that may or may not be added later.-->
+
+        <!--<a class="menu-item">
+            <span><i class="uil uil-setting"></i></span>
+            <h3>Settings</h3>
+        </a> -->
+
+    </div>
+    <!-- <label for="create-post" class="btn btn-primary">Create Post</label> -->
+</div>
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block right_sidebar %}
+{% endblock %}

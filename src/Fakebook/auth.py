@@ -42,6 +42,10 @@ def login():
         if user:
             session["loggedin"] = True
             session["id"] = user["id"]
+            session["username"] = username
+            
+            fullname = f"{user['first_name']} {user['last_name']}"
+            session["fullname"] = fullname
 
             return redirect(url_for("views.home"))
         else:
@@ -68,10 +72,14 @@ def signup():
     # check to make sure it's a POST request.
     if (
         request.method == "POST"
+        and "firstname" in request.form
+        and "lastname" in request.form
         and "username" in request.form
         and "password" in request.form
         and "email" in request.form
     ):
+        firstname = request.form["firstname"]
+        lastname = request.form["lastname"]
         username = request.form["username"]
         password = request.form["password"]
         email = request.form["email"]
@@ -101,8 +109,10 @@ def signup():
 
             # Create new account and store in database
             cursor.execute(
-                "INSERT INTO users_tb (username, password, email) VALUES(%s, %s, %s)",
+                "INSERT INTO users_tb (first_name, last_name, username, password, email) VALUES(%s, %s, %s, %s, %s)",
                 (
+                    firstname,
+                    lastname,
                     username,
                     password,
                     email,

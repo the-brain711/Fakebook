@@ -1,0 +1,10 @@
+@import "layout.css";
+
+/* Profile Page */
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 14rem;
+    margin-top: 5rem;
+}

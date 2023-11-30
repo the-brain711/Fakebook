@@ -2,24 +2,26 @@
 
 {% block title %}Fakebook - Profile{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="profile">
-    <p>Your user account details are below:</p>
-    <table>
-        <tr>
-            <td>Username:</td>
-            <td>{{ username }}</td>
-        </tr>
 
-        <tr>
-            <td>Password:</td>
-            <td>*********</td>
-        </tr>
+<div class="profile-page">
+    <div class="profile-header">
+        <section>
+            <h3>
+                {{ user['name']['first_name'] }} {{ user['name']['last_name'] }}
+            </h3>
+            <p class="text-muted">@{{ user['username'] }}</p>
+            <label>
+                Friends: {{ user['friends_list']['total_friends_count'] }}
+            </label>
+        </section>
+    </div>
 
-        <tr>
-            <td>Email:</td>
-            <td>{{ email }}</td>
-        </tr>
-    </table>
+    <div class="profile-bio">
+    </div>
 </div>
 {% endblock %}

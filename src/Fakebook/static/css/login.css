@@ -1,0 +1,136 @@
+@import "base.css";
+
+/* Wrapper for the entire page */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Left image container if we want to add images later. Wasn't exactly too functional before, but that may be due to HTML file. */
+/* .login-image {
+    flex: 1;
+    background: maroon;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-image img {
+    max-width: 100%;
+    height: auto;
+} */
+
+/* Right form container */
+.login-form-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    padding: 2em;
+    padding-right: 10%;
+    /* This creates space on the right side */
+}
+
+.login-container {
+    background: var(--color-white);
+    padding: 2em;
+    /* This creates space on the right side */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Align the form to the right */
+    border-radius: 8px;
+}
+
+.login-greeter {
+    flex: 1;
+    text-align: left;
+    padding-left: 10%;
+    /* Adjust padding as needed */
+    color: maroon;
+}
+
+/* .login-greeter {
+    text-align: center;
+    color: maroon;
+} */
+
+.login-greeter h1 {
+    font-size: 3em;
+    /* Adjust size as needed */
+    margin-bottom: 0.5em;
+    /* padding-left: 10%; */
+    /*Uncomment if you want to center 'Fakebook' over the label.*/
+}
+
+.login-greeter label {
+    font-size: 1.5em;
+    /* Adjust size as needed */
+}
+
+
+input[type="text"],
+input[type="password"],
+input.login-button {
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input.login-button {
+    width: 100%;
+    padding: 1em;
+    background-color: maroon;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input.login-button {
+    width: 100%;
+    padding: 1em;
+    background-color: maroon;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+} */
+
+input.login-button:hover {
+    background-color: #a52a2a;
+}
+
+a {
+    color: maroon;
+    text-decoration: none;
+}
+
+button {
+    width: 100%;
+    padding: 1em;
+    margin-top: 1em;
+    background-color: white;
+    color: maroon;
+    border: 2px solid maroon;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: maroon;
+    color: white;
+}
