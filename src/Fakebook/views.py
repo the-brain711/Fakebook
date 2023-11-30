@@ -46,11 +46,12 @@ def friends():
             db = app.config["DATABASE"]
             user = User(db, session["id"])
             friends = user.friends_list.friends
+            friend_requests = user.friend_requests
 
             if friends:
-                return render_template("friends.html", friends=friends)
+                return render_template("friends.html", friends=friends, friendrequests=friend_requests)
             else:
-                return render_template("friends.html", friends=None)
+                return render_template("friends.html", friends=None, friend_requests=None)
     else:
         msg = "Failed to load friends page"
 

@@ -156,3 +156,47 @@ main .container .left .profile {
 .left .sidebar .active h3 {
     color: var(--color-primary);
 }
+
+/* Right Sidebar */
+.right .messages {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+}
+
+.right .messages .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.right .messages .i {
+    font-size: 1.4rem;
+}
+
+.right .messages .search-bar {
+    display: flex;
+    /* background: purple; */
+    margin-bottom: 1rem;
+}
+
+.right .friend-requests {
+    margin-top: 1rem;
+}
+
+.right .friend-requests h4 {
+    color: var(--color-gray);
+    margin: 1rem 0;
+}
+
+.right .request .info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.right .request .action {
+    display: flex;
+    gap: 1rem;
+}
