@@ -157,6 +157,10 @@ main .container .left .profile {
     color: var(--color-primary);
 }
 
+.right {
+    margin-left: 3rem;
+}
+
 /* Right Sidebar */
 .right .messages {
     background: var(--color-white);
