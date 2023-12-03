@@ -23,6 +23,7 @@
     grid-row: 2;
 }
 
+/* Bio Section of Profile Page */
 #bio section {
     display: flex;
     justify-content: space-between;
@@ -41,4 +42,22 @@
 #bio form input {
     padding: 0.5rem;
     border-radius: 0.5rem;
+}
+
+/* Friends Section of Profile Page */
+#profile-friends-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#profile-friendslist {
+    display: flex;
+    justify-content: space-between;
+}
+
+#profile-friend-entry {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--border-radius);
+    padding: 1rem;
 }

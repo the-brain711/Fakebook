@@ -57,12 +57,31 @@
         </ul>-->
     </div>
 
-    <div class="box">
-        <div class="title-box">
+    <div class="box" id="profile-friends">
+        <section id="profile-friends-header">
             <h3>Friends</h3>
-            <a href="">All Friends</a>
-        </div>
-        <p>Friends: {{ user['friends_list']['total_friends_count'] }}</p>
+            <p>Friends: {{ user['friends_list']['total_friends_count'] }}</p>
+        </section>
+
+        {% if user["friends_list"]["friends"] %}
+        <section id="profile-friendslist">
+            {% for friend_id, friend in user["friends_list"]["friends"].items() %}
+            <div id="profile-friend-entry">
+                <div>
+                    <h3>{{ friend["friend_fullname"] }}</h3>
+                    <p class="text-muted">@{{ friend["friend_username"] }}</p>
+                </div>
+
+                <form action="{{ url_for('views.profile') }}" method="get">
+                    <input type="hidden" name="user-id" id="user-id" value="{{ friend['friend_id'] }}">
+                    <input type="submit" name="view-profile" id="view-profile" value="View Profile">
+                </form>
+            </div>
+            {% endfor %}
+        </section>
+        {% else %}
+        <label>No Friends...</label>
+        {% endif %}
     </div>
 
     <!--
