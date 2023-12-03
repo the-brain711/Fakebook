@@ -208,3 +208,18 @@ class User(Person):
 
         db.connection.commit()
         db.connection.close()
+
+    def edit_bio(self, text: str):
+        db = self.db
+        cursor = self.cursor
+
+        cursor.execute(
+            "UPDATE users_tb SET bio = %s WHERE id = %s",
+            (
+                text,
+                self.user_id,
+            ),
+        )
+
+        db.connection.commit()
+        db.connection.close()

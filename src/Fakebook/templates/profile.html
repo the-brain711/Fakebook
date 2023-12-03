@@ -33,9 +33,18 @@
         </section>
     </div>
 
-    <div class="box">
-        <h3>Bio</h3>
-        <p class="intro-text">{{ user["bio"] }}</p>
+    <div class="box" id="bio">
+        <section>
+            <h3>Bio</h3>
+            <button onclick="EditBio()"><i class="uil uil-edit" id="bio-edit"></i></button>
+        </section>
+
+        <form action="{{ url_for('views.edit_bio') }}" method="post" autocomplete="on">
+            <textarea rows="5" name="bio-textbox" id="bio-textbox" maxlength="500" required
+                readonly>{{ user["bio"] }}</textarea>
+            <input type="hidden" name="user-id" id="user-id" value="{{ user['user_id'] }}">
+            <input type="submit" name="bio-submit" id="bio-submit" value="Save" hidden />
+        </form>
 
         <!---
         <hr>

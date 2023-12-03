@@ -18,16 +18,27 @@ menuItems.forEach(item => {
 document.addEventListener('DOMContentLoaded', function () {
     var profileImg = document.getElementById('profileImg');
     var profileOptions = document.getElementById('profileOptions');
-    
+
     // Toggle popup visibility
-    profileImg.onclick = function() {
+    profileImg.onclick = function () {
         profileOptions.style.display = profileOptions.style.display === 'block' ? 'none' : 'block';
     };
 
     // Close the popup when clicking outside of it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target !== profileImg && event.target !== profileOptions) {
             profileOptions.style.display = 'none';
         }
     };
 });
+
+// Edit bio function
+function EditBio() {
+    let textbox = document.getElementById("bio-textbox")
+    let saveBtn = document.getElementById("bio-submit")
+
+    if (textbox.readOnly === true) {
+        textbox.readOnly = false
+        saveBtn.removeAttribute("hidden")
+    }
+}

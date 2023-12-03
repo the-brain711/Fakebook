@@ -23,7 +23,7 @@ def home():
         user.timeline.view_timeline()
         posts = user.timeline.posts
         friend_requests = user.friend_requests
-        
+
         if len(posts) != 0:
             return render_template(
                 "home.html",
@@ -50,9 +50,13 @@ def friends():
             print(len(friends))
 
             if friends:
-                return render_template("friends.html", friends=friends, friendrequests=friend_requests)
+                return render_template(
+                    "friends.html", friends=friends, friendrequests=friend_requests
+                )
             else:
-                return render_template("friends.html", friends=None, friend_requests=None)
+                return render_template(
+                    "friends.html", friends=None, friend_requests=None
+                )
     else:
         msg = "Failed to load friends page"
 
@@ -63,7 +67,7 @@ def friends():
 def search_user():
     # Display error message on website
     msg = ""
-    
+
     # Check if POST request has at least a post description
     if (
         "loggedin" in session
@@ -74,17 +78,22 @@ def search_user():
         username = request.args["searchbar"]
         db = app.config["DATABASE"]
         cursor = db.connection.cursor()
-        
+
         # Get user
         cursor.execute(
             "SELECT id, first_name, last_name FROM users_tb WHERE username = %s",
             (username,),
         )
         user = cursor.fetchone()
-        
+
         if user:
             fullname = f"{user[1]} {user[2]}"
-            return render_template("search.html", searchedid=user[0], searchedfullname=fullname, searcheduser=username)
+            return render_template(
+                "search.html",
+                searchedid=user[0],
+                searchedfullname=fullname,
+                searcheduser=username,
+            )
         else:
             msg = "Failed to find user " + username
     else:
@@ -175,24 +184,59 @@ def decline_friend_request():
 
 @views.route("/profile")
 def profile():
-    if (
-        "loggedin" in session
-        and request.method == "GET"
-        and "user-id" in request.args
-    ):
+    if "loggedin" in session and request.method == "GET" and "user-id" in request.args:
         user_id = request.args["user-id"]
-        
+
         db = app.config["DATABASE"]
         user = User(db, user_id)
         fullname = f"{user.name.first_name} {user.name.last_name}"
         username = user.username
 
-        return render_template("profile.html", user=user, fullname=fullname, username=username)
+        return render_template(
+            "profile.html", user=user, fullname=fullname, username=username
+        )
     else:
         db = app.config["DATABASE"]
         user = User(db, session["id"])
 
-        return render_template("profile.html", user=user, fullname=session["fullname"], username=session["username"])
+        return render_template(
+            "profile.html",
+            user=user,
+            fullname=session["fullname"],
+            username=session["username"],
+        )
+
+
+@views.route("/edit_bio", methods=["POST"])
+def edit_bio():
+    # Display error message on website
+    msg = ""
+
+    if (
+        "loggedin" in session
+        and request.method == "POST"
+        and "user-id" in request.form
+        and "bio-textbox" in request.form
+    ):
+        user_id = request.form["user-id"]
+        bio_textbox = request.form["bio-textbox"]
+
+        db = app.config["DATABASE"]
+        user = User(db, user_id)
+        user.edit_bio(bio_textbox)
+        
+        # Crashes when uncommented. Need to fix
+        # post = Post(db=db, post_id=post_id)
+        # return render_template("post.html", post=post)
+
+        return redirect(url_for("views.profile"))
+
+    elif "loggedin" in session and request.method == "POST":
+        msg = "Text is required to edit bio."
+    else:
+        msg = "Unable to edit bio..."
+
+    return render_template("profile.html", msg=msg)
 
 
 @views.route("/create_post", methods=["POST"])
