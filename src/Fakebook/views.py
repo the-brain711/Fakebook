@@ -47,7 +47,6 @@ def friends():
             user = User(db, session["id"])
             friends = user.friends_list.friends
             friend_requests = user.friend_requests
-            print(len(friends))
 
             if friends:
                 return render_template(
@@ -185,16 +184,27 @@ def decline_friend_request():
 @views.route("/profile")
 def profile():
     if "loggedin" in session and request.method == "GET" and "user-id" in request.args:
-        user_id = request.args["user-id"]
+        user_id = int(request.args["user-id"])
 
         db = app.config["DATABASE"]
         user = User(db, user_id)
         fullname = f"{user.name.first_name} {user.name.last_name}"
         username = user.username
 
-        return render_template(
-            "profile.html", user=user, fullname=fullname, username=username
-        )
+        friends = user.friends_list.friends
+        if friends:
+            if user_id in user.friends_list.friends:
+                return render_template(
+                    "profile.html", user=user, fullname=fullname, username=username
+                )
+        else:
+            return render_template(
+                "profile.html",
+                user=user,
+                userid=user_id,
+                fullname=fullname,
+                username=username,
+            )
     else:
         db = app.config["DATABASE"]
         user = User(db, session["id"])
@@ -224,7 +234,7 @@ def edit_bio():
         db = app.config["DATABASE"]
         user = User(db, user_id)
         user.edit_bio(bio_textbox)
-        
+
         # Crashes when uncommented. Need to fix
         # post = Post(db=db, post_id=post_id)
         # return render_template("post.html", post=post)

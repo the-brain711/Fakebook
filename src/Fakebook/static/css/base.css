@@ -121,7 +121,7 @@ textarea {
     column-gap: 2rem;
 }
 
-.box-options form input {
+.button {
     border-radius: var(--border-radius);
     padding: 0.4rem;
 }

@@ -85,15 +85,9 @@
 }
 
 /* Style for the comments link */
-.middle .feed .comments {
-    color: #808080;
-    /* Example gray color, can be changed */
+#comment-post-submit {
     cursor: pointer;
-    padding-top: 0.4rem;
-    display: block;
-    /* Ensures 'View comments' starts on a new line */
-    margin-top: 0.6rem;
-    /* Adds space above the 'View comments' link */
+    color: black;
 }
 
 

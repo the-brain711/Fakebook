@@ -24,19 +24,22 @@
             <img src="images/member-4.png">-->
         </section>
 
+        {% if userid %}
         <section>
-            <button type="button"><img src="images/add-friends.png"> Friend</button>
-            <!--<button type="button"><img src="images/message.png"> Message</button>-->
-            <!---
-            <br>
-            <a href=""><img src="images/more.png"></a>-->
+            <form action="{{ url_for('views.send_friend_request') }}" method="post">
+                <input type="hidden" name="friend-id" id="friend-id" value="{{ userid }}">
+                <input type="hidden" name="friend-username" id="friend-username" value="{{ username }}">
+                <input type="submit" class="button" name="search-friends-submit" id="search-friends-submit"
+                    value="Send Friend Request">
+            </form>
         </section>
+        {% endif %}
     </div>
 
     <div class="box" id="bio">
         <section>
             <h3>Bio</h3>
-            <button onclick="EditBio()"><i class="uil uil-edit" id="bio-edit"></i></button>
+            <button class="button" onclick="EditBio()"><i class="uil uil-edit" id="bio-edit"></i></button>
         </section>
 
         <form action="{{ url_for('views.edit_bio') }}" method="post" autocomplete="on">
@@ -74,7 +77,7 @@
 
                 <form action="{{ url_for('views.profile') }}" method="get">
                     <input type="hidden" name="user-id" id="user-id" value="{{ friend['friend_id'] }}">
-                    <input type="submit" name="view-profile" id="view-profile" value="View Profile">
+                    <input type="submit" class="button" name="view-profile" id="view-profile" value="View Profile">
                 </form>
             </div>
             {% endfor %}

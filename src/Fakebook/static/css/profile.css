@@ -60,4 +60,5 @@
     flex-direction: column;
     border-radius: var(--border-radius);
     padding: 1rem;
+    row-gap: 0.5rem;
 }

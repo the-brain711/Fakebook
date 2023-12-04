@@ -57,7 +57,7 @@
                         <!--Like Post-->
                         <form action="{{ url_for('views.like_post') }}" method="post">
                             <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
-                            <input class="like-btn" type="submit" name="like-post-submit" id="like-post-submit"
+                            <input class="like-btn button" type="submit" name="like-post-submit" id="like-post-submit"
                                 value="Like">
                         </form>
                     </div>
@@ -68,7 +68,7 @@
                 </div>
                 <form action="{{ url_for('views.view_comments') }}" method="get">
                     <input type="hidden" name="post-id" id="post-id" value="{{ post['post_id'] }}">
-                    <input class="comments text-muted" type="submit" name="comment-post-submit" id="comment-post-submit"
+                    <input class="button text-muted" type="submit" name="comment-post-submit" id="comment-post-submit"
                         value="View Comments">
                 </form>
             </div>
